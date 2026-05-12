@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<title>泰語學習卡 v3 - 完整版</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Sarabun:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;
+  --gold:#d4a843;--teal:#2a9d8f;--rose:#e07b6a;--blue:#58a6ff;
+  --violet:#bc8cff;--green:#3fb950;--cyan:#39d0d8;--orange:#f0883e;--pink:#f778ba;
+  --text:#e6edf3;--text-mid:#adbac7;--text-dim:#7d8590;
+}
+body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;align-items:center;font-family:'Noto Serif TC',serif;padding:24px 16px 60px;}
+.header-row{width:100%;max-width:560px;display:flex;align-items:center;margin-bottom:14px;}
+.header-text{flex:1;text-align:center;}
+.header-eyebrow{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.35em;color:var(--text-dim);text-transform:uppercase;margin-bottom:4px;}
+.header-title{font-size:1.4rem;color:var(--gold);font-weight:700;}
+.burger-btn{width:42px;height:42px;border-radius:8px;flex-shrink:0;border:1px solid var(--border);background:var(--surface);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transition:all 0.2s;position:relative;z-index:1001;}
+.burger-btn:hover{border-color:var(--gold);}
+.burger-btn span{display:block;width:18px;height:2px;background:var(--text-mid);border-radius:1px;transition:all 0.3s;}
+.burger-btn.open span:nth-child(1){transform:rotate(45deg) translate(4px,4px);}
+.burger-btn.open span:nth-child(2){opacity:0;}
+.burger-btn.open span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px);}
+.sidebar-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:999;opacity:0;visibility:hidden;transition:all 0.3s;}
+.sidebar-overlay.open{opacity:1;visibility:visible;}
+.sidebar{position:fixed;top:0;right:0;bottom:0;width:290px;max-width:85vw;background:var(--surface);border-left:1px solid var(--border);z-index:1000;transform:translateX(100%);transition:transform 0.3s ease;display:flex;flex-direction:column;overflow-y:auto;}
+.sidebar.open{transform:translateX(0);}
+.sidebar-header{padding:20px 18px 16px;border-bottom:1px solid var(--border);}
+.sidebar-title{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.25em;color:var(--text-dim);text-transform:uppercase;}
+.sidebar-list{padding:6px 0;flex:1;}
+.sidebar-section{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.15em;color:var(--text-dim);padding:12px 18px 6px;text-transform:uppercase;border-top:1px solid var(--border);margin-top:4px;}
+.sidebar-section:first-child{border-top:none;margin-top:0;}
+.sidebar-item{display:flex;align-items:center;gap:12px;padding:10px 18px;cursor:pointer;transition:all 0.15s;border-left:3px solid transparent;}
+.sidebar-item:hover{background:rgba(212,168,67,0.06);}
+.sidebar-item.active{background:rgba(212,168,67,0.08);}
+.sidebar-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+.sidebar-label{flex:1;}
+.sidebar-label-main{font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--text-mid);line-height:1.4;}
+.sidebar-item.active .sidebar-label-main{color:var(--text);font-weight:600;}
+.sidebar-label-sub{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-dim);margin-top:1px;}
+.sidebar-count{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-dim);flex-shrink:0;background:var(--card);border:1px solid var(--border);border-radius:100px;padding:2px 7px;}
+.topic-chip{width:100%;max-width:560px;margin-bottom:11px;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:100px;background:var(--surface);border:1px solid var(--border);cursor:pointer;transition:all 0.2s;}
+.topic-chip:hover{border-color:var(--gold);}
+.topic-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.topic-text{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--text-mid);flex:1;}
+.topic-arrow{font-size:0.7rem;color:var(--text-dim);}
+.concept-box{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px;padding:12px 15px;margin-bottom:11px;transition:border-color 0.3s;}
+.concept-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:5px;}
+.concept-formula{font-family:'Sarabun',sans-serif;font-size:1.35rem;font-weight:600;color:var(--text);line-height:1.8;margin-bottom:2px;}
+.concept-formula .hl{color:var(--gold);}.concept-formula .hl2{color:var(--rose);}.concept-formula .hl3{color:var(--teal);}.concept-formula .hl4{color:var(--blue);}
+.concept-zh{font-size:1.0rem;color:var(--text-dim);font-family:'DM Mono',monospace;}
+.progress-wrap{width:100%;max-width:560px;display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+.progress-bar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
+.progress-fill{height:100%;border-radius:2px;transition:width 0.4s,background 0.3s;}
+.progress-label{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--text-dim);min-width:48px;text-align:right;}
+.card-wrap{width:100%;max-width:560px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px 20px 20px;position:relative;overflow:hidden;animation:slideIn 0.27s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card-stripe{position:absolute;top:0;left:0;right:0;height:2px;}
+.card-num{position:absolute;top:14px;right:16px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-dim);}
+.card-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
+.num-badge{width:48px;height:48px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:1.05rem;font-weight:600;background:rgba(212,168,67,0.08);border:1px solid rgba(212,168,67,0.2);color:var(--gold);}
+.card-icon{width:48px;height:48px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.5rem;background:rgba(212,168,67,0.06);border:1px solid var(--border);}
+.card-main{flex:1;}
+.thai-expr{font-family:'Sarabun',sans-serif;font-size:2.5rem;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:8px;}
+.thai-expr .part-classifier{color:var(--teal);}.thai-expr .part-thii{color:var(--gold);}.thai-expr .part-num{color:var(--rose);}
+.thai-sentence{font-family:'Sarabun',sans-serif;font-size:2.3rem;font-weight:700;color:var(--text);line-height:1.45;margin-bottom:10px;}
+.thai-sentence .p-s{color:var(--blue);}.thai-sentence .p-v{color:var(--teal);}.thai-sentence .p-o{color:var(--rose);}.thai-sentence .p-key{color:var(--gold);}.thai-sentence .p-tail{color:var(--violet);}.thai-sentence .p-neg{color:#ff6b6b;}.thai-sentence .p-prog{color:var(--cyan);}.thai-sentence .p-loc{color:var(--pink);}
+.phonetic{font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--gold);margin-bottom:5px;line-height:1.5;}
+.zh-meaning{font-size:1.25rem;color:var(--text-mid);margin-bottom:14px;line-height:1.6;}
+.speak-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
+.btn-speak{display:inline-flex;align-items:center;gap:5px;padding:7px 15px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.88rem;cursor:pointer;transition:all 0.2s;}
+.btn-speak.th:hover{border-color:var(--teal);color:var(--teal);}.btn-speak.zh:hover{border-color:var(--blue);color:var(--blue);}
+.btn-speak.playing{animation:blink 0.7s infinite;}.btn-speak.th.playing{border-color:var(--teal);color:var(--teal);}.btn-speak.zh.playing{border-color:var(--blue);color:var(--blue);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.breakdown{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
+.breakdown-title{font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:7px;}
+.breakdown-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
+.bk-item{display:flex;flex-direction:column;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 9px;gap:2px;cursor:pointer;transition:all 0.18s;user-select:none;position:relative;}
+.bk-item:hover{border-color:var(--teal);transform:translateY(-1px);}
+.bk-item.word-playing{animation:blink 0.7s infinite;border-color:var(--teal);}
+.bk-thai{font-family:'Sarabun',sans-serif;font-size:1.1rem;font-weight:600;color:var(--text);}
+.bk-zh{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-dim);}
+.bk-plus{font-size:1.1rem;color:var(--text-dim);align-self:center;}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px;padding-top:8px;border-top:1px solid var(--border);}
+.legend-item{display:flex;align-items:center;gap:5px;font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--text-dim);}
+.legend-dot{width:8px;height:8px;border-radius:50%;}
+.sub-badge{display:inline-block;padding:3px 10px;border-radius:100px;font-family:'DM Mono',monospace;font-size:0.75rem;font-weight:600;border:1px solid;margin-bottom:8px;}
+.dialogue-bubble{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:14px 16px;margin-bottom:14px;display:flex;gap:12px;}
+.dialogue-bubble.a{border-left:3px solid var(--blue);}
+.dialogue-bubble.b{border-left:3px solid var(--rose);}
+.dialogue-icon{width:40px;height:40px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.3rem;background:var(--card);border:1px solid var(--border);}
+.dialogue-body{flex:1;}
+.dialogue-name{font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.05em;color:var(--text-dim);margin-bottom:4px;text-transform:uppercase;}
+.dialogue-thai{font-family:'Sarabun',sans-serif;font-size:1.5rem;font-weight:600;color:var(--text);line-height:1.5;margin-bottom:4px;}
+.dialogue-zh{font-size:1.05rem;color:var(--text-mid);line-height:1.5;}
+.nav-row{width:100%;max-width:560px;display:flex;gap:8px;margin-top:14px;}
+.btn-nav{flex:1;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.9rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
+.btn-nav:hover{border-color:var(--gold);color:var(--text);}
+.btn-nav:active{transform:scale(0.97);}
+.btn-jump{padding:12px 20px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.9rem;cursor:pointer;transition:all 0.2s;}
+.btn-jump:hover{border-color:var(--blue);color:var(--blue);}
+.loop-controls{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:14px;}
+.loop-header{font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;}
+.loop-buttons{display:flex;gap:7px;margin-bottom:10px;}
+.btn-loop{flex:1;padding:9px;border-radius:6px;border:1px solid var(--border);background:var(--card);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.85rem;cursor:pointer;transition:all 0.2s;}
+.btn-loop:hover{border-color:var(--teal);color:var(--teal);}
+.btn-loop.active-loop{border-color:var(--teal);color:var(--teal);background:rgba(42,157,143,0.08);}
+.speed-control{display:flex;align-items:center;gap:10px;}
+.speed-label{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--text-dim);}
+.speed-slider{flex:1;height:4px;-webkit-appearance:none;appearance:none;background:var(--border);border-radius:2px;outline:none;}
+.speed-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;background:var(--teal);border-radius:50%;cursor:pointer;}
+.speed-slider::-moz-range-thumb{width:16px;height:16px;background:var(--teal);border-radius:50%;cursor:pointer;border:none;}
+.speed-value{font-family:'DM Mono',monospace;font-size:0.85rem;color:var(--text);min-width:32px;text-align:right;}
+.loop-status{margin-top:10px;padding:8px 10px;background:var(--card);border:1px solid var(--border);border-radius:6px;display:none;}
+.loop-status-text{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--text-mid);text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-title">目錄 · Menu</div>
+  </div>
+  <div class="sidebar-list" id="sidebarList"></div>
+</div>
+
+<div class="header-row">
+  <div class="header-text">
+    <div class="header-eyebrow">Thai Learning Cards</div>
+    <div class="header-title">泰語學習卡 v3</div>
+  </div>
+  <button class="burger-btn" id="burgerBtn" onclick="toggleSidebar()">
+    <span></span><span></span><span></span>
+  </button>
+</div>
+
+<div class="topic-chip" id="topicChip"></div>
+<div class="concept-box" id="conceptBox" style="display:none;"></div>
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+  <div class="progress-label" id="progressLabel"></div>
+</div>
+<div class="card-wrap"><div class="card" id="card"></div></div>
+<div class="nav-row">
+  <button class="btn-nav" onclick="navigate(-1)">← 上一張</button>
+  <button class="btn-jump" onclick="jumpTo()">跳轉</button>
+  <button class="btn-nav" onclick="navigate(1)">下一張 →</button>
+</div>
+
+<div class="loop-controls">
+  <div class="loop-header">自動播放</div>
+  <div class="loop-buttons">
+    <button class="btn-loop" id="btnLoopSingle" onclick="startLoop('single')">單卡循環</button>
+    <button class="btn-loop" id="btnLoopAll" onclick="startLoop('all')">全部循環</button>
+    <button class="btn-loop" id="btnLoopStop" onclick="stopLoop()" style="display:none;">⏹ 停止</button>
+  </div>
+  <div class="speed-control">
+    <span class="speed-label">間隔</span>
+    <input type="range" class="speed-slider" min="2" max="8" step="0.5" value="4" id="speedSlider" oninput="updateSpeed(this.value)">
+    <span class="speed-value" id="speedVal">4s</span>
+  </div>
+  <div class="loop-status" id="loopStatus">
+    <div class="loop-status-text" id="loopStatusText"></div>
+  </div>
+</div>
+
+<script>
+var groups=[
+  {
+    id:'G0-1',
+    title:'數字',
+    subtitle:'基本數字單位',
+    color:'#d4a843',
+    type:'number',
+    concept:{formula:'<span class="hl">數字</span> + <span class="hl2">單位</span>',zh:'數字＋單位'},
+    cards:[
+      {th:'สิบ',phonetic:'sìp',zh:'十',bk:[{t:'สิบ',z:'十'}]},
+      {th:'สามสิบ',phonetic:'sǎam-sìp',zh:'三十',bk:[{t:'สาม',z:'三'},{t:'สิบ',z:'十'}]},
+      {th:'ร้อย',phonetic:'róoi',zh:'百',bk:[{t:'ร้อย',z:'百'}]},
+      {th:'หนึ่งร้อย',phonetic:'nèung-róoi',zh:'一百',bk:[{t:'หนึ่ง',z:'一'},{t:'ร้อย',z:'百'}]},
+      {th:'พัน',phonetic:'phan',zh:'千',bk:[{t:'พัน',z:'千'}]},
+      {th:'สองพัน',phonetic:'sǒong-phan',zh:'二千',bk:[{t:'สอง',z:'二'},{t:'พัน',z:'千'}]},
+      {th:'หมื่น',phonetic:'mùen',zh:'萬',bk:[{t:'หมื่น',z:'萬'}]},
+      {th:'สามหมื่น',phonetic:'sǎam-mùen',zh:'三萬',bk:[{t:'สาม',z:'三'},{t:'หมื่น',z:'萬'}]},
+      {th:'แสน',phonetic:'sǎen',zh:'十萬',bk:[{t:'แสน',z:'十萬'}]},
+      {th:'ห้าแสน',phonetic:'hâa-sǎen',zh:'五十萬',bk:[{t:'ห้า',z:'五'},{t:'แสน',z:'十萬'}]}
+    ]
+  },
+  {
+    id:'G0-2',
+    title:'ที่ + 數字',
+    subtitle:'第幾',
+    color:'#d4a843',
+    type:'ordinal',
+    concept:{formula:'<span class="hl">ที่</span> + <span class="hl2">數字</span>',zh:'第＋數字'},
+    cards:[
+      {th:'ที่ หนึ่ง',phonetic:'thîi-nèung',zh:'第一',bk:[{t:'ที่',z:'第',c:'k'},{t:'หนึ่ง',z:'一',c:'s'}]},
+      {th:'ที่ สอง',phonetic:'thîi-sǒong',zh:'第二',bk:[{t:'ที่',z:'第',c:'k'},{t:'สอง',z:'二',c:'s'}]},
+      {th:'ที่ สาม',phonetic:'thîi-sǎam',zh:'第三',bk:[{t:'ที่',z:'第',c:'k'},{t:'สาม',z:'三',c:'s'}]},
+      {th:'ที่ ยี่สิบเอ็ด',phonetic:'thîi yîi-sìp-èt',zh:'第二十一',bk:[{t:'ที่',z:'第',c:'k'},{t:'ยี่สิบเอ็ด',z:'二十一',c:'s'}]}
+    ]
+  },
+  {
+    id:'G1',
+    title:'量詞 + ที่ + 數字',
+    subtitle:'第幾年/天/人',
+    color:'#2a9d8f',
+    type:'ordinal',
+    concept:{formula:'<span class="hl3">量詞</span> + <span class="hl">ที่</span> + <span class="hl2">數字</span>',zh:'量詞＋第＋數字'},
+    legend:[{label:'量詞',color:'#2a9d8f'},{label:'ที่',color:'#d4a843'},{label:'數字',color:'#e07b6a'}],
+    cards:[
+      {th:'ปี ที่ หนึ่ง',phonetic:'bpii-thîi-nèung',zh:'第一年',bk:[{t:'ปี',z:'年',c:'v'},{t:'ที่',z:'第',c:'k'},{t:'หนึ่ง',z:'一',c:'s'}]},
+      {th:'อัน ที่ สอง',phonetic:'an-thîi-sǒong',zh:'第二個',bk:[{t:'อัน',z:'個',c:'v'},{t:'ที่',z:'第',c:'k'},{t:'สอง',z:'二',c:'s'}]},
+      {th:'วัน ที่ สาม',phonetic:'wan-thîi-sǎam',zh:'第三天',bk:[{t:'วัน',z:'天',c:'v'},{t:'ที่',z:'第',c:'k'},{t:'สาม',z:'三',c:'s'}]},
+      {th:'คน ที่ สี่',phonetic:'khon-thîi-sìi',zh:'第四個人',bk:[{t:'คน',z:'人',c:'v'},{t:'ที่',z:'第',c:'k'},{t:'สี่',z:'四',c:'s'}]},
+      {th:'แก้ว ที่ ห้า',phonetic:'gâeo-thîi-hâa',zh:'第五杯',bk:[{t:'แก้ว',z:'杯',c:'v'},{t:'ที่',z:'第',c:'k'},{t:'ห้า',z:'五',c:'s'}]},
+      {th:'จาน ที่ หก',phonetic:'jaan-thîi-hòk',zh:'第六盤',bk:[{t:'จาน',z:'盤',c:'v'},{t:'ที่',z:'第',c:'k'},{t:'หก',z:'六',c:'s'}]},
+      {th:'เดือน ที่ เท่าไหร่',phonetic:'duean-thîi-thâo-rài?',zh:'第幾個月?',bk:[{t:'เดือน',z:'月',c:'v'},{t:'ที่',z:'第',c:'k'},{t:'เท่าไหร่',z:'幾',c:'s'}]},
+      {th:'อัน ที่ แปด',phonetic:'an-thîi-bpàet',zh:'第八個',bk:[{t:'อัน',z:'個',c:'v'},{t:'ที่',z:'第',c:'k'},{t:'แปด',z:'八',c:'s'}]}
+    ]
+  },
+  {
+    id:'G2',
+    title:'กี่ + 量詞',
+    subtitle:'問數量',
+    color:'#58a6ff',
+    type:'question',
+    concept:{formula:'<span class="hl4">กี่</span> + <span class="hl3">量詞</span>',zh:'幾＋量詞（問數量）'},
+    cards:[
+      {icon:'👤',th:'กี่ คน',phonetic:'kìi-khon',zh:'幾個人?',bk:[{t:'กี่',z:'幾',c:'k'},{t:'คน',z:'人',c:'v'}]},
+      {icon:'📅',th:'กี่ วัน',phonetic:'kìi-wan',zh:'幾天?',bk:[{t:'กี่',z:'幾',c:'k'},{t:'วัน',z:'天',c:'v'}]},
+      {icon:'🛍️',th:'กี่ ถุง',phonetic:'kìi-thǔng',zh:'幾袋?',bk:[{t:'กี่',z:'幾',c:'k'},{t:'ถุง',z:'袋',c:'v'}]},
+      {icon:'🍽️',th:'กี่ จาน',phonetic:'kìi-jaan',zh:'幾盤?',bk:[{t:'กี่',z:'幾',c:'k'},{t:'จาน',z:'盤',c:'v'}]},
+      {icon:'💰',th:'กี่ บาท',phonetic:'kìi-bàat',zh:'幾銖?',bk:[{t:'กี่',z:'幾',c:'k'},{t:'บาท',z:'銖',c:'v'}]},
+      {icon:'📦',th:'กี่ กล่อง',phonetic:'kìi-glòong',zh:'幾盒?',bk:[{t:'กี่',z:'幾',c:'k'},{t:'กล่อง',z:'盒',c:'v'}]},
+      {icon:'📆',th:'กี่ สัปดาห์',phonetic:'kìi-sàp-daa',zh:'幾週?',bk:[{t:'กี่',z:'幾',c:'k'},{t:'สัปดาห์',z:'週',c:'v'}]}
+    ]
+  },
+  {
+    id:'G3',
+    title:'名詞 + เบอร์ อะไร?',
+    subtitle:'幾號?',
+    color:'#f0883e',
+    type:'question',
+    concept:{formula:'<span class="hl2">名詞</span> + <span class="hl">เบอร์</span> + <span class="hl4">อะไร?</span>',zh:'名詞＋號碼＋什麼？'},
+    cards:[
+      {icon:'🚂',th:'รถไฟ เบอร์ อะไร',phonetic:'rót-fai bəə à-rai?',zh:'火車是幾號?',bk:[{t:'รถไฟ',z:'火車',c:'s'},{t:'เบอร์',z:'號碼',c:'k'},{t:'อะไร',z:'什麼',c:'v'}]},
+      {icon:'🪑',th:'โต๊ะ เบอร์ อะไร',phonetic:'dtó bəə à-rai?',zh:'桌子是幾號?',bk:[{t:'โต๊ะ',z:'桌子',c:'s'},{t:'เบอร์',z:'號碼',c:'k'},{t:'อะไร',z:'什麼',c:'v'}]},
+      {icon:'💺',th:'ที่นั่ง เบอร์ อะไร',phonetic:'thîi-nâng bəə à-rai?',zh:'座位是幾號?',bk:[{t:'ที่นั่ง',z:'座位',c:'s'},{t:'เบอร์',z:'號碼',c:'k'},{t:'อะไร',z:'什麼',c:'v'}]},
+      {icon:'🚪',th:'ห้อง เบอร์ อะไร',phonetic:'hông bəə à-rai?',zh:'房間是幾號?',bk:[{t:'ห้อง',z:'房間',c:'s'},{t:'เบอร์',z:'號碼',c:'k'},{t:'อะไร',z:'什麼',c:'v'}]},
+      {icon:'📱',th:'มือถือ เบอร์ อะไร',phonetic:'mue-thǔe bəə à-rai?',zh:'手機幾號?',bk:[{t:'มือถือ',z:'手機',c:'s'},{t:'เบอร์',z:'號碼',c:'k'},{t:'อะไร',z:'什麼',c:'v'}]},
+      {icon:'📞',th:'โทรศัพท์ เบอร์ อะไร',phonetic:'thoo-rá-sàp bəə à-rai?',zh:'電話幾號?',bk:[{t:'โทรศัพท์',z:'電話',c:'s'},{t:'เบอร์',z:'號碼',c:'k'},{t:'อะไร',z:'什麼',c:'v'}]},
+      {icon:'🏪',th:'เคาน์เตอร์ เบอร์ อะไร',phonetic:'khao-dtəə bəə à-rai?',zh:'櫃檯幾號?',bk:[{t:'เคาน์เตอร์',z:'櫃檯',c:'s'},{t:'เบอร์',z:'號碼',c:'k'},{t:'อะไร',z:'什麼',c:'v'}]},
+      {icon:'👟',th:'รองเท้า เบอร์ อะไร',phonetic:'roong-tháo bəə à-rai?',zh:'鞋子幾號?',bk:[{t:'รองเท้า',z:'鞋子',c:'s'},{t:'เบอร์',z:'號碼',c:'k'},{t:'อะไร',z:'什麼',c:'v'}]}
+    ]
+  },
+  {
+    id:'G4',
+    title:'動詞/形容詞 + เท่าไหร่?',
+    subtitle:'多少/多長/多重?',
+    color:'#bc8cff',
+    type:'question',
+    concept:{formula:'<span class="hl3">動詞/形容詞</span> + <span class="hl">เท่าไหร่?</span>',zh:'動詞/形容詞＋多少？'},
+    cards:[
+      {icon:'📊',th:'มี เท่าไหร่',phonetic:'mii thâo-rài?',zh:'有多少?',bk:[{t:'มี',z:'有',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {icon:'🛒',th:'ซื้อ เท่าไหร่',phonetic:'súue thâo-rài?',zh:'買多少?',bk:[{t:'ซื้อ',z:'買',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {icon:'🤲',th:'เอา เท่าไหร่',phonetic:'ao thâo-rài?',zh:'要多少?',bk:[{t:'เอา',z:'要',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {icon:'📏',th:'ยาว เท่าไหร่',phonetic:'yaao thâo-rài?',zh:'有多長?',bk:[{t:'ยาว',z:'長',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {icon:'📐',th:'สูง เท่าไหร่',phonetic:'sǔung thâo-rài?',zh:'有多高?',bk:[{t:'สูง',z:'高',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {icon:'⚖️',th:'หนัก เท่าไหร่',phonetic:'nàk thâo-rài?',zh:'有多重?',bk:[{t:'หนัก',z:'重',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {icon:'⚡',th:'เร็ว เท่าไหร่',phonetic:'reo thâo-rài?',zh:'有多快?',bk:[{t:'เร็ว',z:'快',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {icon:'💴',th:'ราคา เท่าไหร่',phonetic:'raa-khaa thâo-rài?',zh:'多少錢?',bk:[{t:'ราคา',z:'價格',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]}
+    ]
+  },
+  {
+    id:'G5',
+    title:'是…對嗎?',
+    subtitle:'ใช่ไหม?',
+    color:'#3fb950',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">N.</span> + <span class="hl3">เป็น/คือ</span> + <span class="hl2">N.</span> + <span class="hl">ใช่ไหม</span>',zh:'名詞＋是＋名詞＋對嗎？'},
+    legend:[{label:'主詞',color:'#58a6ff'},{label:'動詞',color:'#2a9d8f'},{label:'受詞',color:'#e07b6a'},{label:'疑問',color:'#d4a843'}],
+    cards:[
+      {th:'คุณ เป็น คนไทย ใช่ไหม ครับ',phonetic:'khun bpen khon-thai châi-mǎi khráp?',zh:'你是泰國人,對嗎?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'เป็น',z:'是',c:'v'},{t:'คนไทย',z:'泰國人',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]},
+      {th:'นี่ เป็น ร้านอาหาร ใช่ไหม ครับ',phonetic:'nîi bpen ráan-aa-hǎan châi-mǎi khráp?',zh:'這裡是餐廳,對嗎?',bk:[{t:'นี่',z:'這',c:'s'},{t:'เป็น',z:'是',c:'v'},{t:'ร้านอาหาร',z:'餐廳',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]},
+      {th:'คุณ เป็น คนจีน ใช่ไหม ครับ',phonetic:'khun bpen khon-jiin châi-mǎi khráp?',zh:'你是中國人,對嗎?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'เป็น',z:'是',c:'v'},{t:'คนจีน',z:'中國人',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]},
+      {th:'เขา เป็น หมอ ใช่ไหม ครับ',phonetic:'khǎo bpen mǒo châi-mǎi khráp?',zh:'他是醫生,對嗎?',bk:[{t:'เขา',z:'他',c:'s'},{t:'เป็น',z:'是',c:'v'},{t:'หมอ',z:'醫生',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]},
+      {th:'นั่น เป็น รถของคุณ ใช่ไหม ครับ',phonetic:'nân bpen rót-khǒong-khun châi-mǎi khráp?',zh:'那是你的車,對嗎?',bk:[{t:'นั่น',z:'那',c:'s'},{t:'เป็น',z:'是',c:'v'},{t:'รถของคุณ',z:'你的車',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]},
+      {th:'นั่น คือ ต้มยำกุ้ง ใช่ไหม ครับ',phonetic:'nân khue dtôm-yam-gûng châi-mǎi khráp?',zh:'那是泰式酸辣蝦湯,對嗎?',bk:[{t:'นั่น',z:'那',c:'s'},{t:'คือ',z:'是',c:'v'},{t:'ต้มยำกุ้ง',z:'冬蔭功',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]},
+      {th:'นั่น คือ ร้านสะดวกซื้อ ใช่ไหม ครับ',phonetic:'nân khue ráan-sà-dùak-súue châi-mǎi khráp?',zh:'那是便利商店,對嗎?',bk:[{t:'นั่น',z:'那',c:'s'},{t:'คือ',z:'是',c:'v'},{t:'ร้านสะดวกซื้อ',z:'便利店',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]},
+      {th:'นี่ คือ มือถือของคุณ ใช่ไหม ครับ',phonetic:'nîi khue mue-thǔe-khǒong-khun châi-mǎi khráp?',zh:'這是你的手機,對嗎?',bk:[{t:'นี่',z:'這',c:'s'},{t:'คือ',z:'是',c:'v'},{t:'มือถือของคุณ',z:'你的手機',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]},
+      {th:'นี่ คือ เมนูภาษาไทย ใช่ไหม ครับ',phonetic:'nîi khue mee-nuu-phaa-sǎa-thai châi-mǎi khráp?',zh:'這是泰文菜單,對嗎?',bk:[{t:'นี่',z:'這',c:'s'},{t:'คือ',z:'是',c:'v'},{t:'เมนูภาษาไทย',z:'泰文菜單',c:'o'},{t:'ใช่ไหม',z:'對嗎',c:'k'},{t:'ครับ',z:'(禮)',c:'t'}]}
+    ]
+  },
+  {
+    id:'G6',
+    title:'會做…',
+    subtitle:'V.+เป็น',
+    color:'#2a9d8f',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">S.</span> + <span class="hl3">V.</span> + <span class="hl2">O.</span> + <span class="hl">เป็น</span>',zh:'主詞＋動詞＋受詞＋會'},
+    legend:[{label:'主詞',color:'#58a6ff'},{label:'動詞',color:'#2a9d8f'},{label:'受詞',color:'#e07b6a'},{label:'能力',color:'#d4a843'}],
+    cards:[
+      {th:'ผม พูด ภาษาไทย เป็น',phonetic:'phǒm phûut phaa-sǎa-thai bpen',zh:'我會說泰語',bk:[{t:'ผม',z:'我',c:'s'},{t:'พูด',z:'說',c:'v'},{t:'ภาษาไทย',z:'泰語',c:'o'},{t:'เป็น',z:'會',c:'k'}]},
+      {th:'เขา ทำอาหาร เป็น',phonetic:'khǎo tham-aa-hǎan bpen',zh:'他會做飯',bk:[{t:'เขา',z:'他',c:'s'},{t:'ทำอาหาร',z:'做飯',c:'v'},{t:'เป็น',z:'會',c:'k'}]},
+      {th:'ฉัน ขับรถ เป็น',phonetic:'chǎn khàp-rót bpen',zh:'我會開車',bk:[{t:'ฉัน',z:'我',c:'s'},{t:'ขับรถ',z:'開車',c:'v'},{t:'เป็น',z:'會',c:'k'}]},
+      {th:'คุณ ว่ายน้ำ เป็น ไหม',phonetic:'khun wâai-náam bpen mǎi?',zh:'你會游泳嗎?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'ว่ายน้ำ',z:'游泳',c:'v'},{t:'เป็น',z:'會',c:'k'},{t:'ไหม',z:'嗎',c:'t'}]},
+      {th:'พี่ เล่นกีตาร์ เป็น',phonetic:'phîi lên-gii-dtaa bpen',zh:'哥哥會彈吉他',bk:[{t:'พี่',z:'哥哥',c:'s'},{t:'เล่นกีตาร์',z:'彈吉他',c:'v'},{t:'เป็น',z:'會',c:'k'}]}
+    ]
+  },
+  {
+    id:'G7',
+    title:'不會',
+    subtitle:'ไม่เป็น',
+    color:'#ff6b6b',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">S.</span> + <span class="hl3">V.</span> + <span class="hl2">O.</span> + <span class="hl">ไม่เป็น</span>',zh:'主詞＋動詞＋受詞＋不會'},
+    legend:[{label:'主詞',color:'#58a6ff'},{label:'動詞',color:'#2a9d8f'},{label:'受詞',color:'#e07b6a'},{label:'否定',color:'#ff6b6b'}],
+    cards:[
+      {th:'ผม พูด ภาษาจีน ไม่เป็น',phonetic:'phǒm phûut phaa-sǎa-jiin mâi-bpen',zh:'我不會說中文',bk:[{t:'ผม',z:'我',c:'s'},{t:'พูด',z:'說',c:'v'},{t:'ภาษาจีน',z:'中文',c:'o'},{t:'ไม่เป็น',z:'不會',c:'n'}]},
+      {th:'เขา ว่ายน้ำ ไม่เป็น',phonetic:'khǎo wâai-náam mâi-bpen',zh:'他不會游泳',bk:[{t:'เขา',z:'他',c:'s'},{t:'ว่ายน้ำ',z:'游泳',c:'v'},{t:'ไม่เป็น',z:'不會',c:'n'}]},
+      {th:'ฉัน ขี่จักรยาน ไม่เป็น',phonetic:'chǎn khìi-jàk-grà-yaan mâi-bpen',zh:'我不會騎腳踏車',bk:[{t:'ฉัน',z:'我',c:'s'},{t:'ขี่จักรยาน',z:'騎腳踏車',c:'v'},{t:'ไม่เป็น',z:'不會',c:'n'}]},
+      {th:'น้อง เล่นเปียโน ไม่เป็น',phonetic:'nóong lên-bpìa-noo mâi-bpen',zh:'弟弟不會彈鋼琴',bk:[{t:'น้อง',z:'弟弟',c:'s'},{t:'เล่นเปียโน',z:'彈鋼琴',c:'v'},{t:'ไม่เป็น',z:'不會',c:'n'}]},
+      {th:'พ่อ ทำอาหาร ไม่เป็น',phonetic:'phôo tham-aa-hǎan mâi-bpen',zh:'爸爸不會做飯',bk:[{t:'พ่อ',z:'爸爸',c:'s'},{t:'ทำอาหาร',z:'做飯',c:'v'},{t:'ไม่เป็น',z:'不會',c:'n'}]}
+    ]
+  },
+  {
+    id:'G8',
+    title:'形容詞',
+    subtitle:'基礎描述',
+    color:'#f778ba',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">N.</span> + <span class="hl">Adj.</span>',zh:'名詞＋形容詞'},
+    legend:[{label:'名詞',color:'#58a6ff'},{label:'形容詞',color:'#d4a843'}],
+    cards:[
+      {th:'รถ เร็ว',phonetic:'rót reo',zh:'車子快',bk:[{t:'รถ',z:'車',c:'s'},{t:'เร็ว',z:'快',c:'k'}]},
+      {th:'ห้อง ใหญ่',phonetic:'hông yài',zh:'房間大',bk:[{t:'ห้อง',z:'房間',c:'s'},{t:'ใหญ่',z:'大',c:'k'}]},
+      {th:'อาหาร อร่อย',phonetic:'aa-hǎan à-ròi',zh:'食物好吃',bk:[{t:'อาหาร',z:'食物',c:'s'},{t:'อร่อย',z:'好吃',c:'k'}]},
+      {th:'น้ำ เย็น',phonetic:'náam yen',zh:'水冰',bk:[{t:'น้ำ',z:'水',c:'s'},{t:'เย็น',z:'冰',c:'k'}]},
+      {th:'ต้นไม้ สูง',phonetic:'dtôn-mái sǔung',zh:'樹高',bk:[{t:'ต้นไม้',z:'樹',c:'s'},{t:'สูง',z:'高',c:'k'}]},
+      {th:'กระเป๋า แพง',phonetic:'grà-bpǎo phaeng',zh:'包包貴',bk:[{t:'กระเป๋า',z:'包',c:'s'},{t:'แพง',z:'貴',c:'k'}]},
+      {th:'ชา ร้อน',phonetic:'chaa rón',zh:'茶熱',bk:[{t:'ชา',z:'茶',c:'s'},{t:'ร้อน',z:'熱',c:'k'}]},
+      {th:'คน ดี',phonetic:'khon dii',zh:'人好',bk:[{t:'คน',z:'人',c:'s'},{t:'ดี',z:'好',c:'k'}]}
+    ]
+  },
+  {
+    id:'G9',
+    title:'不…',
+    subtitle:'ไม่',
+    color:'#ff6b6b',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">N.</span> + <span class="hl">ไม่</span> + <span class="hl2">Adj.</span>',zh:'名詞＋不＋形容詞'},
+    legend:[{label:'名詞',color:'#58a6ff'},{label:'否定',color:'#ff6b6b'},{label:'形容詞',color:'#e07b6a'}],
+    cards:[
+      {th:'ต้นมะพร้าว ไม่ สูง',phonetic:'dtôn-má-phráo mâi sǔung',zh:'椰子樹不高',bk:[{t:'ต้นมะพร้าว',z:'椰子樹',c:'s'},{t:'ไม่',z:'不',c:'n'},{t:'สูง',z:'高',c:'o'}]},
+      {th:'มะม่วง ไม่ แพง',phonetic:'má-mûang mâi phaeng',zh:'芒果不貴',bk:[{t:'มะม่วง',z:'芒果',c:'s'},{t:'ไม่',z:'不',c:'n'},{t:'แพง',z:'貴',c:'o'}]},
+      {th:'ทุเรียน ไม่ ถูก',phonetic:'thú-rian mâi thùuk',zh:'榴槤不便宜',bk:[{t:'ทุเรียน',z:'榴槤',c:'s'},{t:'ไม่',z:'不',c:'n'},{t:'ถูก',z:'便宜',c:'o'}]},
+      {th:'รถไฟ ไม่ เร็ว',phonetic:'rót-fai mâi reo',zh:'火車不快',bk:[{t:'รถไฟ',z:'火車',c:'s'},{t:'ไม่',z:'不',c:'n'},{t:'เร็ว',z:'快',c:'o'}]},
+      {th:'แอร์ ไม่ เย็น',phonetic:'ae mâi yen',zh:'空調不冷',bk:[{t:'แอร์',z:'空調',c:'s'},{t:'ไม่',z:'不',c:'n'},{t:'เย็น',z:'冷',c:'o'}]},
+      {th:'อากาศ ไม่ ดี',phonetic:'aa-gàat mâi dii',zh:'天氣不好',bk:[{t:'อากาศ',z:'天氣',c:'s'},{t:'ไม่',z:'不',c:'n'},{t:'ดี',z:'好',c:'o'}]}
+    ]
+  },
+  {
+    id:'G10',
+    title:'問程度',
+    subtitle:'เท่าไหร่?',
+    color:'#bc8cff',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">S.</span> + <span class="hl3">Adj./V.</span> + <span class="hl">เท่าไหร่?</span>',zh:'主詞＋形容詞/動詞＋多少？'},
+    legend:[{label:'主詞',color:'#58a6ff'},{label:'形/動',color:'#2a9d8f'},{label:'疑問',color:'#d4a843'}],
+    cards:[
+      {th:'คุณ สูง เท่าไหร่',phonetic:'khun sǔung thâo-rài?',zh:'你多高?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'สูง',z:'高',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {th:'ส้มกิโลละ เท่าไหร่',phonetic:'sôm gi-loo-lá thâo-rài?',zh:'橘子一公斤多少錢?',bk:[{t:'ส้มกิโลละ',z:'橘子/公斤',c:'s'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {th:'ผม หนัก เท่าไหร่',phonetic:'phǒm nàk thâo-rài?',zh:'我多重?',bk:[{t:'ผม',z:'我',c:'s'},{t:'หนัก',z:'重',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {th:'บ้าน ไกล เท่าไหร่',phonetic:'bâan glai thâo-rài?',zh:'家有多遠?',bk:[{t:'บ้าน',z:'家',c:'s'},{t:'ไกล',z:'遠',c:'v'},{t:'เท่าไหร่',z:'多少',c:'k'}]},
+      {th:'ราคา เท่าไหร่',phonetic:'raa-khaa thâo-rài?',zh:'多少錢?',bk:[{t:'ราคา',z:'價格',c:'s'},{t:'เท่าไหร่',z:'多少',c:'k'}]}
+    ]
+  },
+  {
+    id:'G11',
+    title:'在哪裡?',
+    subtitle:'ที่ไหน?',
+    color:'#f778ba',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">S.</span> + <span class="hl3">V.</span> + <span class="hl">ที่ไหน?</span>',zh:'主詞＋動詞＋哪裡？'},
+    legend:[{label:'主詞',color:'#58a6ff'},{label:'動詞',color:'#2a9d8f'},{label:'疑問',color:'#d4a843'}],
+    cards:[
+      {th:'คุณ จะไป ที่ไหน',phonetic:'khun jà bpai thîi-nǎi?',zh:'你要去哪裡?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'จะไป',z:'將去',c:'v'},{t:'ที่ไหน',z:'哪裡',c:'k'}]},
+      {th:'ร้านอาหาร อยู่ ที่ไหน',phonetic:'ráan-aa-hǎan yùu thîi-nǎi?',zh:'餐廳在哪裡?',bk:[{t:'ร้านอาหาร',z:'餐廳',c:'s'},{t:'อยู่',z:'在',c:'v'},{t:'ที่ไหน',z:'哪裡',c:'k'}]},
+      {th:'คุณ อยู่ ที่ไหน',phonetic:'khun yùu thîi-nǎi?',zh:'你在哪裡?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'อยู่',z:'在',c:'v'},{t:'ที่ไหน',z:'哪裡',c:'k'}]},
+      {th:'เขา ทำงาน ที่ไหน',phonetic:'khǎo tham-ngaan thîi-nǎi?',zh:'他在哪裡工作?',bk:[{t:'เขา',z:'他',c:'s'},{t:'ทำงาน',z:'工作',c:'v'},{t:'ที่ไหน',z:'哪裡',c:'k'}]},
+      {th:'ห้องน้ำ อยู่ ที่ไหน',phonetic:'hông-náam yùu thîi-nǎi?',zh:'廁所在哪裡?',bk:[{t:'ห้องน้ำ',z:'廁所',c:'s'},{t:'อยู่',z:'在',c:'v'},{t:'ที่ไหน',z:'哪裡',c:'k'}]}
+    ]
+  },
+  {
+    id:'G12',
+    title:'什麼?',
+    subtitle:'อะไร?',
+    color:'#f0883e',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">S.</span> + <span class="hl3">V.</span> + <span class="hl">อะไร?</span>',zh:'主詞＋動詞＋什麼？'},
+    legend:[{label:'主詞',color:'#58a6ff'},{label:'動詞',color:'#2a9d8f'},{label:'疑問',color:'#d4a843'}],
+    cards:[
+      {th:'คุณ ชื่อ อะไร',phonetic:'khun chûue à-rai?',zh:'你叫什麼名字?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'ชื่อ',z:'叫',c:'v'},{t:'อะไร',z:'什麼',c:'k'}]},
+      {th:'คุณ กิน อะไร',phonetic:'khun gin à-rai?',zh:'你吃什麼?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'กิน',z:'吃',c:'v'},{t:'อะไร',z:'什麼',c:'k'}]},
+      {th:'คุณ ต้องการ อะไร',phonetic:'khun dtông-gaan à-rai?',zh:'你需要什麼?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'ต้องการ',z:'需要',c:'v'},{t:'อะไร',z:'什麼',c:'k'}]},
+      {th:'นี่ คือ อะไร',phonetic:'nîi khue à-rai?',zh:'這是什麼?',bk:[{t:'นี่',z:'這',c:'s'},{t:'คือ',z:'是',c:'v'},{t:'อะไร',z:'什麼',c:'k'}]},
+      {th:'คุณ ซื้อ อะไร',phonetic:'khun súue à-rai?',zh:'你買什麼?',bk:[{t:'คุณ',z:'你',c:'s'},{t:'ซื้อ',z:'買',c:'v'},{t:'อะไร',z:'什麼',c:'k'}]}
+    ]
+  },
+  {
+    id:'G13',
+    title:'在某地',
+    subtitle:'S. + อยู่ + 地點',
+    color:'#f778ba',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">S.</span> + <span class="hl3">อยู่</span> + <span class="hl">地點</span>',zh:'主詞＋在＋地點'},
+    legend:[{label:'主詞',color:'#58a6ff'},{label:'動詞',color:'#2a9d8f'},{label:'地點',color:'#f778ba'}],
+    cards:[
+      {th:'บ้านผม อยู่ ที่ไทเป',phonetic:'bâan-phǒm yùu thîi-thai-bpee',zh:'我家在台北',bk:[{t:'บ้านผม',z:'我家',c:'s'},{t:'อยู่',z:'在',c:'v'},{t:'ที่ไทเป',z:'台北',c:'l'}]},
+      {th:'โต๊ะ อยู่ ข้างบน',phonetic:'dtó yùu khâang-bon',zh:'桌子在上面',bk:[{t:'โต๊ะ',z:'桌子',c:'s'},{t:'อยู่',z:'在',c:'v'},{t:'ข้างบน',z:'上面',c:'l'}]},
+      {th:'ผม อยู่ ที่บ้าน',phonetic:'phǒm yùu thîi-bâan',zh:'我在家',bk:[{t:'ผม',z:'我',c:'s'},{t:'อยู่',z:'在',c:'v'},{t:'ที่บ้าน',z:'家',c:'l'}]},
+      {th:'ร้านอาหาร อยู่ ใกล้ๆ',phonetic:'ráan-aa-hǎan yùu glâi-glâi',zh:'餐廳在附近',bk:[{t:'ร้านอาหาร',z:'餐廳',c:'s'},{t:'อยู่',z:'在',c:'v'},{t:'ใกล้ๆ',z:'附近',c:'l'}]},
+      {th:'ห้องน้ำ อยู่ ข้างล่าง',phonetic:'hông-náam yùu khâang-lâang',zh:'廁所在樓下',bk:[{t:'ห้องน้ำ',z:'廁所',c:'s'},{t:'อยู่',z:'在',c:'v'},{t:'ข้างล่าง',z:'樓下',c:'l'}]}
+    ]
+  },
+  {
+    id:'G14',
+    title:'現在進行式',
+    subtitle:'กำลัง…อยู่',
+    color:'#39d0d8',
+    type:'grammar',
+    concept:{formula:'<span class="hl4">S.</span> + <span class="hl">กำลัง</span> + <span class="hl3">V.</span> + <span class="hl">อยู่</span>',zh:'主詞＋正在＋動詞＋著'},
+    legend:[{label:'主詞',color:'#58a6ff'},{label:'動詞',color:'#2a9d8f'},{label:'進行',color:'#39d0d8'}],
+    cards:[
+      {th:'ผม กำลัง กินอาหารเช้า อยู่',phonetic:'phǒm gam-lang gin-aa-hǎan-cháo yùu',zh:'我正在吃早餐',bk:[{t:'ผม',z:'我',c:'s'},{t:'กำลัง',z:'正在',c:'p'},{t:'กินอาหารเช้า',z:'吃早餐',c:'v'},{t:'อยู่',z:'著',c:'p'}]},
+      {th:'เขา กำลัง เรียนภาษาไทย อยู่',phonetic:'khǎo gam-lang rian-phaa-sǎa-thai yùu',zh:'他正在學泰語',bk:[{t:'เขา',z:'他',c:'s'},{t:'กำลัง',z:'正在',c:'p'},{t:'เรียนภาษาไทย',z:'學泰語',c:'v'},{t:'อยู่',z:'著',c:'p'}]},
+      {th:'พี่ชาย กำลัง ทำงาน อยู่',phonetic:'phîi-chaai gam-lang tham-ngaan yùu',zh:'哥哥正在工作',bk:[{t:'พี่ชาย',z:'哥哥',c:'s'},{t:'กำลัง',z:'正在',c:'p'},{t:'ทำงาน',z:'工作',c:'v'},{t:'อยู่',z:'著',c:'p'}]},
+      {th:'แม่ กำลัง ดูทีวี อยู่',phonetic:'mâe gam-lang duu-thii-wii yùu',zh:'媽媽正在看電視',bk:[{t:'แม่',z:'媽媽',c:'s'},{t:'กำลัง',z:'正在',c:'p'},{t:'ดูทีวี',z:'看電視',c:'v'},{t:'อยู่',z:'著',c:'p'}]},
+      {th:'พ่อ กำลัง คุย อยู่',phonetic:'phôo gam-lang khui yùu',zh:'爸爸正在聊天',bk:[{t:'พ่อ',z:'爸爸',c:'s'},{t:'กำลัง',z:'正在',c:'p'},{t:'คุย',z:'聊天',c:'v'},{t:'อยู่',z:'著',c:'p'}]}
+    ]
+  },
+  {
+    id:'G15',
+    title:'常用語',
+    subtitle:'Common Phrases',
+    color:'#3fb950',
+    type:'phrase',
+    cards:[
+      {icon:'🙏',th:'ขอโทษ',phonetic:'khǒo-thôot',zh:'對不起',bk:[{t:'ขอโทษ',z:'對不起'}]},
+      {icon:'😊',th:'ไม่เป็นไร',phonetic:'mâi-bpen-rai',zh:'沒關係 / 不客氣',bk:[{t:'ไม่เป็นไร',z:'沒關係'}]},
+      {icon:'🙏',th:'ขอบคุณ',phonetic:'khòp-khun',zh:'謝謝',bk:[{t:'ขอบคุณ',z:'謝謝'}]},
+      {icon:'✨',th:'ด้วยความยินดี',phonetic:'dûai-khwaam-yin-dii',zh:'不客氣(With pleasure)',bk:[{t:'ด้วยความยินดี',z:'樂意效勞'}]},
+      {icon:'🌅',th:'สวัสดีตอนเช้า',phonetic:'sà-wàt-dii-dtawn-cháo',zh:'早安',bk:[{t:'สวัสดี',z:'你好'},{t:'ตอนเช้า',z:'早上'}]},
+      {icon:'☀️',th:'สวัสดีตอนบ่าย',phonetic:'sà-wàt-dii-dtawn-bàai',zh:'午安',bk:[{t:'สวัสดี',z:'你好'},{t:'ตอนบ่าย',z:'下午'}]},
+      {icon:'🌙',th:'ราตรีสวัสดิ์',phonetic:'raa-dtrii-sà-wàt',zh:'晚安',bk:[{t:'ราตรีสวัสดิ์',z:'晚安'}]},
+      {icon:'👋',th:'ลาก่อน',phonetic:'laa-gòon',zh:'再見',bk:[{t:'ลาก่อน',z:'再見'}]}
+    ]
+  },
+  {
+    id:'G16',
+    title:'水果',
+    subtitle:'Fruits',
+    color:'#ff6b9d',
+    type:'vocab',
+    cards:[
+      {icon:'🍉',th:'ผลไม้',phonetic:'phǒn-lá-mái',zh:'水果',bk:[{t:'ผลไม้',z:'水果'}]},
+      {icon:'🍌',th:'กล้วย',phonetic:'glûai',zh:'香蕉',bk:[{t:'กล้วย',z:'香蕉'}]},
+      {icon:'🥭',th:'ขนุน',phonetic:'khà-nǔn',zh:'波羅蜜',bk:[{t:'ขนุน',z:'波羅蜜'}]},
+      {icon:'🍉',th:'แตงโม',phonetic:'dtaeng-moo',zh:'西瓜',bk:[{t:'แตงโม',z:'西瓜'}]},
+      {icon:'🌰',th:'มะขาม',phonetic:'má-khǎam',zh:'羅望子',bk:[{t:'มะขาม',z:'羅望子'}]},
+      {icon:'🫐',th:'ลำไย',phonetic:'lam-yai',zh:'龍眼',bk:[{t:'ลำไย',z:'龍眼'}]},
+      {icon:'🦔',th:'ทุเรียน',phonetic:'thú-rian',zh:'榴槤',bk:[{t:'ทุเรียน',z:'榴槤'}]},
+      {icon:'🍇',th:'มังคุด',phonetic:'mang-khút',zh:'山竹',bk:[{t:'มังคุด',z:'山竹'}]},
+      {icon:'🔴',th:'เงาะ',phonetic:'ngɔ́',zh:'紅毛丹',bk:[{t:'เงาะ',z:'紅毛丹'}]},
+      {icon:'🥥',th:'มะพร้าว',phonetic:'má-phráo',zh:'椰子',bk:[{t:'มะพร้าว',z:'椰子'}]},
+      {icon:'🥭',th:'มะม่วง',phonetic:'má-mûang',zh:'芒果',bk:[{t:'มะม่วง',z:'芒果'}]},
+      {icon:'🍐',th:'ฝรั่ง',phonetic:'fà-ràng',zh:'芭樂',bk:[{t:'ฝรั่ง',z:'芭樂'}]},
+      {icon:'🟣',th:'เสาวรส',phonetic:'sǎo-wá-rót',zh:'百香果',bk:[{t:'เสาวรส',z:'百香果'}]}
+    ]
+  },
+  {
+    id:'G17',
+    title:'餐食',
+    subtitle:'Meals',
+    color:'#f0883e',
+    type:'vocab',
+    cards:[
+      {icon:'🍚',th:'ข้าวเหนียวมะม่วง',phonetic:'khâao-nǐao-má-mûang',zh:'芒果糯米飯',bk:[{t:'ข้าวเหนียว',z:'糯米飯'},{t:'มะม่วง',z:'芒果'}]},
+      {icon:'🍲',th:'ต้มยำกุ้ง',phonetic:'dtôm-yam-gûng',zh:'冬蔭功湯',bk:[{t:'ต้มยำกุ้ง',z:'冬蔭功'}]},
+      {icon:'🍛',th:'แกงเขียวหวานไก่',phonetic:'gaeng-khǐao-wǎan-gài',zh:'綠咖喱雞',bk:[{t:'แกงเขียวหวาน',z:'綠咖喱'},{t:'ไก่',z:'雞'}]},
+      {icon:'🍛',th:'แกงเขียวหวานหมู',phonetic:'gaeng-khǐao-wǎan-mǔu',zh:'綠咖喱豬',bk:[{t:'แกงเขียวหวาน',z:'綠咖喱'},{t:'หมู',z:'豬'}]},
+      {icon:'🍜',th:'ก๋วยเตี๋ยวเรือ',phonetic:'gǔai-dtǐao-ruea',zh:'船麵',bk:[{t:'ก๋วยเตี๋ยวเรือ',z:'船麵'}]},
+      {icon:'🥗',th:'ส้มตำ',phonetic:'sôm-dtam',zh:'青木瓜沙拉',bk:[{t:'ส้มตำ',z:'青木瓜沙拉'}]},
+      {icon:'🍛',th:'ผัดกะเพราหมู',phonetic:'phàt-gà-phrao-mǔu',zh:'打拋豬',bk:[{t:'ผัดกะเพรา',z:'打拋'},{t:'หมู',z:'豬'}]},
+      {icon:'🍛',th:'ผัดกะเพราเนื้อ',phonetic:'phàt-gà-phrao-núea',zh:'打拋牛',bk:[{t:'ผัดกะเพรา',z:'打拋'},{t:'เนื้อ',z:'牛'}]},
+      {icon:'🍝',th:'ผัดไทย',phonetic:'phàt-thai',zh:'泰式炒河粉',bk:[{t:'ผัดไทย',z:'泰式炒河粉'}]},
+      {icon:'�串',th:'หมูปิ้ง',phonetic:'mǔu-bpîng',zh:'泰式烤肉串',bk:[{t:'หมูปิ้ง',z:'烤豬肉'}]},
+      {icon:'🥞',th:'โรตี',phonetic:'roo-dtii',zh:'泰式煎餅',bk:[{t:'โรตี',z:'泰式煎餅'}]}
+    ]
+  },
+  {
+    id:'G18',
+    title:'飲料',
+    subtitle:'Drinks',
+    color:'#39d0d8',
+    type:'vocab',
+    cards:[
+      {icon:'🧋',th:'ชาไทยเย็น',phonetic:'chaa-thai-yen',zh:'冰泰奶',bk:[{t:'ชาไทย',z:'泰奶'},{t:'เย็น',z:'冰'}]},
+      {icon:'☕',th:'ชาไทยร้อน',phonetic:'chaa-thai-rón',zh:'熱泰奶',bk:[{t:'ชาไทย',z:'泰奶'},{t:'ร้อน',z:'熱'}]},
+      {icon:'🧊',th:'กาแฟเย็น',phonetic:'gaa-fae-yen',zh:'冰咖啡',bk:[{t:'กาแฟ',z:'咖啡'},{t:'เย็น',z:'冰'}]},
+      {icon:'☕',th:'กาแฟร้อน',phonetic:'gaa-fae-rón',zh:'熱咖啡',bk:[{t:'กาแฟ',z:'咖啡'},{t:'ร้อน',z:'熱'}]},
+      {icon:'🥤',th:'น้ำลำไย',phonetic:'náam-lam-yai',zh:'龍眼汁',bk:[{t:'น้ำ',z:'水/汁'},{t:'ลำไย',z:'龍眼'}]},
+      {icon:'🥛',th:'น้ำเต้าหู้',phonetic:'náam-dtâo-hûu',zh:'豆奶',bk:[{t:'น้ำเต้าหู้',z:'豆漿'}]},
+      {icon:'🥛',th:'นม',phonetic:'nom',zh:'牛奶',bk:[{t:'นม',z:'牛奶'}]}
+    ]
+  },
+  {
+    id:'G19',
+    title:'甜點配料',
+    subtitle:'Desserts',
+    color:'#f778ba',
+    type:'vocab',
+    cards:[
+      {icon:'🔴',th:'ถั่วแดง',phonetic:'thùa-daeng',zh:'紅豆',bk:[{t:'ถั่ว',z:'豆'},{t:'แดง',z:'紅'}]},
+      {icon:'🟢',th:'ถั่วเขียว',phonetic:'thùa-khǐao',zh:'綠豆',bk:[{t:'ถั่ว',z:'豆'},{t:'เขียว',z:'綠'}]},
+      {icon:'⚪',th:'ลูกเดือย',phonetic:'lûuk-duuai',zh:'薏仁',bk:[{t:'ลูกเดือย',z:'薏仁'}]},
+      {icon:'⚫',th:'งาดำ',phonetic:'ngaa-dam',zh:'黑芝麻',bk:[{t:'งา',z:'芝麻'},{t:'ดำ',z:'黑'}]},
+      {icon:'🥥',th:'มะพร้าวขูด',phonetic:'má-phráo-khùut',zh:'椰絲',bk:[{t:'มะพร้าว',z:'椰子'},{t:'ขูด',z:'刨絲'}]},
+      {icon:'🥜',th:'ถั่วลิสง',phonetic:'thùa-lí-sǒng',zh:'花生',bk:[{t:'ถั่วลิสง',z:'花生'}]},
+      {icon:'🍼',th:'นมข้นหวาน',phonetic:'nom-khôn-wǎan',zh:'煉乳',bk:[{t:'นม',z:'奶'},{t:'ข้นหวาน',z:'濃縮甜'}]},
+      {icon:'🟣',th:'เผือก',phonetic:'phùeak',zh:'芋頭',bk:[{t:'เผือก',z:'芋頭'}]}
+    ]
+  },
+  {
+    id:'G20',
+    title:'便利商店對話',
+    subtitle:'Conversation',
+    color:'#58a6ff',
+    type:'dialogue',
+    cards:[
+      {role:'a',speakerIcon:'👨',speakerZh:'Winai (A)',fullThai:'อ้าว! สวัสดีครับ พี่มลมาซื้ออะไรครับ',phonetic:'âao! sà-wàt-dii khráp phîi-mon maa súue à-rai khráp?',zh:'噢！你好,夢姊來買什麼東西?',bk:[{t:'อ้าว',z:'噢'},{t:'สวัสดีครับ',z:'你好'},{t:'พี่มล',z:'夢姊'},{t:'มา',z:'來'},{t:'ซื้อ',z:'買'},{t:'อะไร',z:'什麼'},{t:'ครับ',z:'(禮)'}]},
+      {role:'b',speakerIcon:'👩',speakerZh:'Wimol (B)',fullThai:'ฉันจะมาซื้อเครื่องดื่มไปดื่มนิดหน่อยค่ะ',phonetic:'chǎn jà maa súue khrûeang-dùem bpai dùem nít-nòi khâ',zh:'我要來買一些飲料回去喝。',bk:[{t:'ฉัน',z:'我'},{t:'จะมา',z:'將來'},{t:'ซื้อ',z:'買'},{t:'เครื่องดื่ม',z:'飲料'},{t:'ไป',z:'去'},{t:'ดื่ม',z:'喝'},{t:'นิดหน่อย',z:'一些'},{t:'ค่ะ',z:'(禮)'}]},
+      {role:'a',speakerIcon:'👨',speakerZh:'Winai (A)',fullThai:'แล้วกำลังจะเลือกซื้ออะไรอยู่ครับ',phonetic:'láeo gam-lang jà lûeak súue à-rai yùu khráp?',zh:'那你正要買什麼?',bk:[{t:'แล้ว',z:'那'},{t:'กำลังจะ',z:'正要'},{t:'เลือก',z:'選'},{t:'ซื้อ',z:'買'},{t:'อะไร',z:'什麼'},{t:'อยู่',z:'著'},{t:'ครับ',z:'(禮)'}]},
+      {role:'b',speakerIcon:'👩',speakerZh:'Wimol (B)',fullThai:'กำลังหากาแฟอยู่ อยากดื่มกาแฟเย็นๆ ค่ะ',phonetic:'gam-lang hǎa gaa-fae yùu yàak dùem gaa-fae yen-yen khâ',zh:'我正在找咖啡,想喝一點冰的咖啡。',bk:[{t:'กำลัง',z:'正在'},{t:'หา',z:'找'},{t:'กาแฟ',z:'咖啡'},{t:'อยู่',z:'著'},{t:'อยาก',z:'想'},{t:'ดื่ม',z:'喝'},{t:'กาแฟเย็นๆ',z:'冰咖啡'},{t:'ค่ะ',z:'(禮)'}]},
+      {role:'a',speakerIcon:'👨',speakerZh:'Winai (A)',fullThai:'นั่นไง! กาแฟกระป๋องอยู่ที่นั่นครับ',phonetic:'nân-ngai! gaa-fae grà-bpǒng yùu thîi-nân khráp',zh:'在那邊！罐裝咖啡在那邊。',bk:[{t:'นั่นไง',z:'在那'},{t:'กาแฟกระป๋อง',z:'罐裝咖啡'},{t:'อยู่',z:'在'},{t:'ที่นั่น',z:'那裡'},{t:'ครับ',z:'(禮)'}]},
+      {role:'b',speakerIcon:'👩',speakerZh:'Wimol (B)',fullThai:'ขอบใจจ้ะ แล้ววินัยล่ะ มาซื้ออะไรคะ',phonetic:'khòp-jai jâ láeo wi-nai lâ maa súue à-rai khá?',zh:'謝謝,那威乃先生呢？來買什麼?',bk:[{t:'ขอบใจ',z:'謝謝'},{t:'จ้ะ',z:'喔'},{t:'แล้ว',z:'那'},{t:'วินัย',z:'威乃'},{t:'ล่ะ',z:'呢'},{t:'มา',z:'來'},{t:'ซื้อ',z:'買'},{t:'อะไร',z:'什麼'},{t:'คะ',z:'(禮)'}]},
+      {role:'a',speakerIcon:'👨',speakerZh:'Winai (A)',fullThai:'มาซื้อนมกล่องครับ',phonetic:'maa súue nom glòong khráp',zh:'來買盒裝牛奶。',bk:[{t:'มา',z:'來'},{t:'ซื้อ',z:'買'},{t:'นมกล่อง',z:'盒裝牛奶'},{t:'ครับ',z:'(禮)'}]},
+      {role:'b',speakerIcon:'👩',speakerZh:'Wimol (B)',fullThai:'อืม! ดื่มนมมีประโยชน์ดีนะ งั้นไปก่อนนะคะ',phonetic:'uem! dùem nom mii bprà-yòot dii ná ngán bpai gòon ná khâ',zh:'嗯！喝牛奶有好處喔,那我先走了！',bk:[{t:'อืม',z:'嗯'},{t:'ดื่มนม',z:'喝牛奶'},{t:'มีประโยชน์',z:'有益處'},{t:'ดีนะ',z:'好喔'},{t:'งั้น',z:'那'},{t:'ไปก่อน',z:'先走'},{t:'นะคะ',z:'了(禮)'}]},
+      {role:'a',speakerIcon:'👨',speakerZh:'Winai (A)',fullThai:'แล้วพี่ยังใช้มือถือเบอร์เดิมอยู่หรือเปล่าครับ',phonetic:'láeo phîi yang chái mue-thǔe bəə dəəm yùu rǔue bplào khráp?',zh:'那姊姊！還用原來的手機號碼嗎?',bk:[{t:'แล้ว',z:'那'},{t:'พี่',z:'姊姊'},{t:'ยัง',z:'還'},{t:'ใช้',z:'用'},{t:'มือถือเบอร์เดิม',z:'原手機號'},{t:'อยู่',z:'著'},{t:'หรือเปล่า',z:'嗎'},{t:'ครับ',z:'(禮)'}]},
+      {role:'b',speakerIcon:'👩',speakerZh:'Wimol (B)',fullThai:'เบอร์เดิมจ้ะ แล้วโทรมาคุยบ้างนะ เจอกันใหม่ค่ะ',phonetic:'bəə dəəm jâ láeo thoo maa khui bâang ná jəə gan mài khâ',zh:'對,一樣。有空打給我聊一聊哦！再見。',bk:[{t:'เบอร์เดิม',z:'原號碼'},{t:'จ้ะ',z:'喔'},{t:'แล้ว',z:'那'},{t:'โทรมา',z:'打來'},{t:'คุย',z:'聊'},{t:'บ้าง',z:'一些'},{t:'นะ',z:'喔'},{t:'เจอกันใหม่',z:'再見'},{t:'ค่ะ',z:'(禮)'}]}
+    ]
+  },
+  {
+    id:'G22',
+    title:'路邊攤點餐對話',
+    subtitle:'Street Food Ordering',
+    color:'#e07b6a',
+    type:'dialogue',
+    cards:[
+      {role:'a',speakerIcon:'👨‍🍳',speakerZh:'店員 (A)',fullThai:'สวัสดีครับ คุณจะรับอะไรดีครับ',phonetic:'sà-wàt-dii khráp khun jà ráp à-rai dii khráp?',zh:'您好！你要點什麼好?',bk:[{t:'สวัสดีครับ',z:'你好'},{t:'คุณ',z:'你'},{t:'จะรับ',z:'要點'},{t:'อะไร',z:'什麼'},{t:'ดี',z:'好'},{t:'ครับ',z:'(禮)'}]},
+      {role:'b',speakerIcon:'👩',speakerZh:'Wimol (B)',fullThai:'ขอน้ำเต้าหู้ สอง ถุงกับปาท่องโก๋ สี่ ตัวค่ะ',phonetic:'khǒo náam-dtâo-hûu sǒong thǔng gàp bpaa-thông-gǒo sìi dtua khâ',zh:'請給我兩袋豆漿和四根油條。',bk:[{t:'ขอ',z:'請給'},{t:'น้ำเต้าหู้',z:'豆漿'},{t:'สอง',z:'二'},{t:'ถุง',z:'袋'},{t:'กับ',z:'和'},{t:'ปาท่องโก๋',z:'油條'},{t:'สี่',z:'四'},{t:'ตัว',z:'根'},{t:'ค่ะ',z:'(禮)'}]},
+      {role:'a',speakerIcon:'👨‍🍳',speakerZh:'店員 (A)',fullThai:'น้ำเต้าหู้ใส่เครื่องไหมครับ',phonetic:'náam-dtâo-hûu sài khrûeang mǎi khráp?',zh:'豆漿要加料嗎?',bk:[{t:'น้ำเต้าหู้',z:'豆漿'},{t:'ใส่เครื่อง',z:'加料'},{t:'ไหม',z:'嗎'},{t:'ครับ',z:'(禮)'}]},
+      {role:'b',speakerIcon:'👩',speakerZh:'Wimol (B)',fullThai:'ไม่ใส่เครื่อง เอาแบบธรรมดาค่ะ',phonetic:'mâi sài khrûeang ao bàep tham-má-daa khâ',zh:'不加料,我要普通的。',bk:[{t:'ไม่ใส่เครื่อง',z:'不加料'},{t:'เอา',z:'要'},{t:'แบบธรรมดา',z:'普通的'},{t:'ค่ะ',z:'(禮)'}]},
+      {role:'a',speakerIcon:'👨‍🍳',speakerZh:'店員 (A)',fullThai:'ได้แล้วครับ ยี่สิบห้า บาทครับ',phonetic:'dâi láeo khráp yîi-sìp-hâa bàat khráp',zh:'好了,二十五泰銖。',bk:[{t:'ได้แล้ว',z:'好了'},{t:'ครับ',z:'(禮)'},{t:'ยี่สิบห้า',z:'二十五'},{t:'บาท',z:'銖'},{t:'ครับ',z:'(禮)'}]},
+      {role:'b',speakerIcon:'👩',speakerZh:'Wimol (B)',fullThai:'นี่ค่ะ',phonetic:'nîi khâ',zh:'這裡(付錢)。',bk:[{t:'นี่',z:'這裡'},{t:'ค่ะ',z:'(禮)'}]}
+    ]
+  }
+];
+
+var gIdx=0,cIdx=0,sidebarOpen=false,voices=[],loopMode=null,loopInterval=4000,loopTimer=null;
+
+function hexAlpha(hex,alpha){
+  var r=parseInt(hex.slice(1,3),16),g=parseInt(hex.slice(3,5),16),b=parseInt(hex.slice(5,7),16);
+  return 'rgba('+r+','+g+','+b+','+alpha+')';
+}
+
+function toggleSidebar(){sidebarOpen=!sidebarOpen;document.getElementById('sidebar').classList.toggle('open',sidebarOpen);document.getElementById('sidebarOverlay').classList.toggle('open',sidebarOpen);document.getElementById('burgerBtn').classList.toggle('open',sidebarOpen);}
+function closeSidebar(){sidebarOpen=false;document.getElementById('sidebar').classList.remove('open');document.getElementById('sidebarOverlay').classList.remove('open');document.getElementById('burgerBtn').classList.remove('open');}
+
+// ── VOICE ─────────────────────────────────────────────────────────────────
+function getVoice(lang){
+  if(voices.length===0)voices=window.speechSynthesis.getVoices();
+  var filtered=voices.filter(function(v){return v.lang.startsWith(lang.split('-')[0]);});
+  if(filtered.length>0)return filtered[0];
+  return null;
+}
+if(window.speechSynthesis){
+  voices=window.speechSynthesis.getVoices();
+  if(window.speechSynthesis.onvoiceschanged!==undefined){window.speechSynthesis.onvoiceschanged=function(){voices=window.speechSynthesis.getVoices();};}
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────
+function render(){
+  var g=groups[gIdx],c=g.cards[cIdx],total=g.cards.length,color=g.color;
+  
+  // Sidebar
+  var sidebarHTML='';
+  var sections=[
+    {title:'數字應用',start:0,end:5},
+    {title:'文法句型',start:6,end:15},
+    {title:'常用語',start:16,end:16},
+    {title:'單字學習',start:17,end:20},
+    {title:'對話練習',start:21,end:22}
+  ];
+  sections.forEach(function(sec){
+    sidebarHTML+='<div class="sidebar-section">'+sec.title+'</div>';
+    for(var i=sec.start;i<=sec.end && i<groups.length;i++){
+      var active=i===gIdx?' active':'';
+      sidebarHTML+='<div class="sidebar-item'+active+'" onclick="switchGroup('+i+');closeSidebar();">'
+        +'<div class="sidebar-dot" style="background:'+groups[i].color+'"></div>'
+        +'<div class="sidebar-label">'
+        +'<div class="sidebar-label-main">'+groups[i].id+' '+groups[i].title+'</div>'
+        +'<div class="sidebar-label-sub">'+groups[i].subtitle+'</div>'
+        +'</div>'
+        +'<div class="sidebar-count">'+groups[i].cards.length+'</div>'
+        +'</div>';
+    }
+  });
+  document.getElementById('sidebarList').innerHTML=sidebarHTML;
+  
+  // Topic Chip
+  document.getElementById('topicChip').innerHTML='<div class="topic-dot" style="background:'+color+'"></div><div class="topic-text">'+g.id+' - '+g.title+' ｜ '+g.subtitle+'</div><div class="topic-arrow">▸</div>';
+  
+  // Concept Box
+  if(g.concept){
+    document.getElementById('conceptBox').style.display='';
+    document.getElementById('conceptBox').innerHTML='<div class="concept-label">句型公式 · Pattern</div><div class="concept-formula">'+g.concept.formula+'</div><div class="concept-zh">'+g.concept.zh+'</div>';
+  }else{
+    document.getElementById('conceptBox').style.display='none';
+  }
+  
+  // Progress
+  var prog=(cIdx+1)/total*100;
+  document.getElementById('progressFill').style.width=prog+'%';
+  document.getElementById('progressFill').style.background=color;
+  document.getElementById('progressLabel').textContent=(cIdx+1)+'/'+total;
+  
+  // Card
+  var cardHTML='<div class="card-stripe" style="background:'+color+'"></div><div class="card-num">'+(cIdx+1)+'/'+total+'</div>';
+  var bkHTML='',bkData=c.bk||[];
+  
+  if(g.type==='number'||g.type==='ordinal'){
+    var thaiDisp=bkData.map(function(b,i){return '<span class="part-'+(b.c==='k'?'thii':(b.c==='v'?'classifier':'num'))+'">'+b.t+'</span>';}).join(' ');
+    bkHTML=bkData.map(function(b,i){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>'+(i<bkData.length-1?'<div class="bk-plus">+</div>':'');}).join('');
+    cardHTML+='<div class="card-top"><div class="num-badge">'+(c.icon||'#')+'</div><div class="card-main"><div class="thai-expr">'+thaiDisp+'</div><div class="phonetic">'+c.phonetic+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
+  } else if(g.type==='phrase'){
+    bkHTML=bkData.map(function(b){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>';}).join('');
+    cardHTML+='<div class="card-top"><div class="card-icon">'+(c.icon||'💬')+'</div><div class="card-main"><div class="thai-expr">'+c.th+'</div><div class="phonetic">'+c.phonetic+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
+  } else if(g.type==='question'){
+    var thaiDisp2=bkData.map(function(b){var cls={k:'part-thii',v:'part-classifier',s:'part-num'}[b.c]||'part-thii';return '<span class="'+cls+'">'+b.t+'</span>';}).join(' ');
+    bkHTML=bkData.map(function(b,i){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>'+(i<bkData.length-1?'<div class="bk-plus">+</div>':'');}).join('');
+    cardHTML+='<div class="card-top"><div class="card-icon">'+(c.icon||'💡')+'</div><div class="card-main"><div class="thai-expr">'+thaiDisp2+'</div><div class="phonetic">'+c.phonetic+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
+  } else if(g.type==='dialogue'){
+    var roleCls=c.role||'a';
+    bkHTML=bkData.map(function(b){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>';}).join('');
+    cardHTML+='<div class="dialogue-bubble '+roleCls+'">'
+      +'<div class="dialogue-icon">'+(c.speakerIcon||'💬')+'</div>'
+      +'<div class="dialogue-body">'
+      +'<div class="dialogue-name">'+(c.speakerZh||'')+'</div>'
+      +'<div class="dialogue-thai">'+c.fullThai+'</div>'
+      +(c.phonetic?'<div class="phonetic">'+c.phonetic+'</div>':'')
+      +'<div class="dialogue-zh">'+c.zh+'</div>'
+      +'</div></div>';
+    cardHTML+='<div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div>';
+  } else {
+    var cm={s:'p-s',v:'p-v',o:'p-o',k:'p-key',t:'p-tail',n:'p-neg',p:'p-prog',l:'p-loc'};
+    var thaiDisp3=bkData.map(function(b){return '<span class="'+(cm[b.c]||'p-key')+'">'+b.t+'</span>';}).join(' ');
+    bkHTML=bkData.map(function(b,i){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>'+(i<bkData.length-1?'<div class="bk-plus">+</div>':'');}).join('');
+    var legendHTML=g.legend?g.legend.map(function(l){return '<div class="legend-item"><span class="legend-dot" style="background:'+l.color+'"></span>'+l.label+'</div>';}).join(''):'';
+    var subBadge=c.sub?'<span class="sub-badge" style="color:'+color+';border-color:'+hexAlpha(color,0.4)+';background:'+hexAlpha(color,0.08)+'">'+c.sub+'</span><br>':'';
+    cardHTML+=subBadge+'<div class="thai-sentence">'+thaiDisp3+'</div><div class="phonetic">'+c.phonetic+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div>';
+  }
+
+  if(bkHTML){
+    var legendHTML2=g.legend?g.legend.map(function(l){return '<div class="legend-item"><span class="legend-dot" style="background:'+l.color+'"></span>'+l.label+'</div>';}).join(''):'';
+    var bkTitle=g.type==='dialogue'?'單字拆解・（點字發音）':'句型拆解・（點字發音）';
+    cardHTML+='<div class="breakdown"><div class="breakdown-title">'+bkTitle+'</div><div class="breakdown-row">'+bkHTML+'</div>'+(legendHTML2?'<div class="legend">'+legendHTML2+'</div>':'')+'</div>';
+  }
+  document.getElementById('card').innerHTML=cardHTML;
+}
+
+// ── TTS ───────────────────────────────────────────────────────────────────
+function speakText(text,lang,btn){
+  if(!window.speechSynthesis)return;window.speechSynthesis.cancel();
+  if(voices.length===0)voices=window.speechSynthesis.getVoices();
+  var u=new SpeechSynthesisUtterance(text);u.lang=lang;u.rate=0.82;
+  var v=getVoice(lang);if(v)u.voice=v;
+  if(btn){u.onstart=function(){btn.classList.add('playing');};u.onend=function(){btn.classList.remove('playing');};u.onerror=function(){btn.classList.remove('playing');};}
+  window.speechSynthesis.speak(u);
+}
+function speakThai(btn){speakText(groups[gIdx].cards[cIdx].th||groups[gIdx].cards[cIdx].fullThai,'th-TH',btn);}
+function speakZh(btn){speakText(groups[gIdx].cards[cIdx].zh,'zh-TW',btn);}
+function speakWord(text,el){
+  if(loopMode)stopLoop(true);if(!window.speechSynthesis)return;window.speechSynthesis.cancel();
+  if(voices.length===0)voices=window.speechSynthesis.getVoices();
+  var u=new SpeechSynthesisUtterance(text);u.lang='th-TH';u.rate=0.78;
+  var v=getVoice('th-TH');if(v)u.voice=v;
+  u.onstart=function(){el.classList.add('word-playing');};u.onend=function(){el.classList.remove('word-playing');};u.onerror=function(){el.classList.remove('word-playing');};
+  window.speechSynthesis.speak(u);
+}
+
+// ── NAV ───────────────────────────────────────────────────────────────────
+function animateCard(){var c=document.getElementById('card');c.style.animation='none';c.offsetHeight;c.style.animation='';}
+function navigate(dir){if(loopMode)stopLoop(true);var total=groups[gIdx].cards.length;cIdx=Math.max(0,Math.min(total-1,cIdx+dir));animateCard();render();}
+function switchGroup(g){if(loopMode)stopLoop(true);gIdx=g;cIdx=0;render();}
+function jumpTo(){var total=groups[gIdx].cards.length;var n=parseInt(prompt('輸入卡片的編號（1-'+total+'）：'));if(!isNaN(n)&&n>=1&&n<=total){cIdx=n-1;render();}}
+
+// ── LOOP ──────────────────────────────────────────────────────────────────
+function updateSpeed(v){loopInterval=v*1000;document.getElementById('speedVal').textContent=v+'s';if(loopMode){clearLoopTimer();scheduleNext();}}
+function startLoop(mode){stopLoop(false);loopMode=mode;document.getElementById('btnLoopSingle').className='btn-loop'+(mode==='single'?' active-loop':'');document.getElementById('btnLoopAll').className='btn-loop'+(mode==='all'?' active-loop':'');document.getElementById('btnLoopStop').style.display='';document.getElementById('loopStatus').style.display='';updateLoopStatus();speakSeq();}
+function stopLoop(r){if(r===undefined)r=true;loopMode=null;clearLoopTimer();if(window.speechSynthesis)window.speechSynthesis.cancel();if(r){document.getElementById('btnLoopSingle').className='btn-loop';document.getElementById('btnLoopAll').className='btn-loop';document.getElementById('btnLoopStop').style.display='none';document.getElementById('loopStatus').style.display='none';}}
+function clearLoopTimer(){if(loopTimer){clearTimeout(loopTimer);loopTimer=null;}}
+function updateLoopStatus(){var c=groups[gIdx].cards[cIdx],total=groups[gIdx].cards.length;var el=document.getElementById('loopStatusText');var ml=loopMode==='single'?'單卡循環':'全部循環';if(el)el.textContent=ml+'｜'+c.zh+' ('+(cIdx+1)+'/'+total+')';}
+function speakSeq(){
+  if(!loopMode)return;var c=groups[gIdx].cards[cIdx];if(!window.speechSynthesis){scheduleNext();return;}window.speechSynthesis.cancel();
+  if(voices.length===0)voices=window.speechSynthesis.getVoices();
+  var thV=getVoice('th-TH'),zhV=getVoice('zh-TW');
+  var thaiText=c.th||c.fullThai;
+  var u1=new SpeechSynthesisUtterance(thaiText);u1.lang='th-TH';u1.rate=0.80;if(thV)u1.voice=thV;
+  var u2=new SpeechSynthesisUtterance(c.zh);u2.lang='zh-TW';u2.rate=0.88;if(zhV)u2.voice=zhV;
+  u2.onend=function(){if(loopMode)scheduleNext();};u2.onerror=function(){if(loopMode)scheduleNext();};
+  u1.onend=function(){if(!loopMode)return;setTimeout(function(){if(loopMode&&window.speechSynthesis)window.speechSynthesis.speak(u2);},350);};
+  u1.onerror=function(){if(loopMode)scheduleNext();};
+  window.speechSynthesis.speak(u1);
+}
+function scheduleNext(){if(!loopMode)return;loopTimer=setTimeout(function(){if(!loopMode)return;if(loopMode==='single'){updateLoopStatus();speakSeq();}else{var total=groups[gIdx].cards.length;cIdx=(cIdx+1)%total;animateCard();render();updateLoopStatus();speakSeq();}},loopInterval);}
+
+// ── KEYBOARD ──────────────────────────────────────────────────────────────
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')navigate(1);if(e.key==='ArrowLeft')navigate(-1);if(e.key===' '){e.preventDefault();if(loopMode)stopLoop(true);else startLoop('all');}if(e.key==='m'||e.key==='M')toggleSidebar();if(e.key==='Escape'&&sidebarOpen)closeSidebar();});
+
+render();
+</script>
+</body>
+</html>

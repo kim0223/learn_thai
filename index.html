@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>泰語學習卡 - 主目錄</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Sarabun:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;
+  --gold:#d4a843;--teal:#2a9d8f;--rose:#e07b6a;--blue:#58a6ff;
+  --violet:#bc8cff;--green:#3fb950;--cyan:#39d0d8;--orange:#f0883e;--pink:#f778ba;
+  --text:#e6edf3;--text-mid:#adbac7;--text-dim:#7d8590;
+}
+body{
+  min-height:100vh;
+  background:var(--bg);
+  font-family:'Noto Serif TC',serif;
+  padding:24px 16px 60px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.header{
+  width:100%;
+  max-width:800px;
+  text-align:center;
+  margin-bottom:40px;
+}
+.header-eyebrow{
+  font-family:'DM Mono',monospace;
+  font-size:0.7rem;
+  letter-spacing:0.35em;
+  color:var(--text-dim);
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.header-title{
+  font-size:2rem;
+  color:var(--gold);
+  font-weight:700;
+  margin-bottom:12px;
+}
+.header-subtitle{
+  font-size:1rem;
+  color:var(--text-mid);
+  line-height:1.6;
+}
+.container{
+  width:100%;
+  max-width:800px;
+}
+.section{
+  margin-bottom:40px;
+}
+.section-header{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  margin-bottom:16px;
+  padding-bottom:8px;
+  border-bottom:2px solid var(--border);
+}
+.section-icon{
+  font-size:1.5rem;
+}
+.section-title{
+  font-family:'DM Mono',monospace;
+  font-size:0.85rem;
+  letter-spacing:0.2em;
+  color:var(--text-dim);
+  text-transform:uppercase;
+  flex:1;
+}
+.section-count{
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem;
+  color:var(--text-dim);
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:100px;
+  padding:4px 12px;
+}
+.topic-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+  gap:12px;
+}
+.topic-card{
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:16px;
+  cursor:pointer;
+  transition:all 0.2s;
+  text-decoration:none;
+  display:block;
+  position:relative;
+  overflow:hidden;
+}
+.topic-card::before{
+  content:'';
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  height:3px;
+  background:var(--color);
+  opacity:0;
+  transition:opacity 0.2s;
+}
+.topic-card:hover{
+  border-color:var(--color);
+  transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(0,0,0,0.3);
+}
+.topic-card:hover::before{
+  opacity:1;
+}
+.topic-header{
+  display:flex;
+  align-items:flex-start;
+  gap:12px;
+  margin-bottom:12px;
+}
+.topic-icon{
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1.3rem;
+  background:var(--surface);
+  border:1px solid var(--border);
+  flex-shrink:0;
+}
+.topic-info{
+  flex:1;
+}
+.topic-id{
+  font-family:'DM Mono',monospace;
+  font-size:0.7rem;
+  color:var(--color);
+  font-weight:600;
+  margin-bottom:4px;
+}
+.topic-title{
+  font-size:1.1rem;
+  color:var(--text);
+  font-weight:600;
+  margin-bottom:2px;
+}
+.topic-subtitle{
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem;
+  color:var(--text-dim);
+}
+.topic-meta{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:8px;
+}
+.topic-cards{
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem;
+  color:var(--text-mid);
+}
+.topic-arrow{
+  color:var(--text-dim);
+  font-size:0.85rem;
+}
+.footer{
+  width:100%;
+  max-width:800px;
+  margin-top:40px;
+  padding-top:20px;
+  border-top:1px solid var(--border);
+  text-align:center;
+}
+.footer-text{
+  font-family:'DM Mono',monospace;
+  font-size:0.75rem;
+  color:var(--text-dim);
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-eyebrow">Thai Learning System</div>
+  <div class="header-title">🇹🇭 泰語學習卡 v3</div>
+  <div class="header-subtitle">模組化學習系統 · 選擇主題開始學習</div>
+</div>
+
+<div class="container" id="container"></div>
+
+<div class="footer">
+  <div class="footer-text">泰語學習卡 v3.0 · 模組化版本 · 2026</div>
+</div>
+
+<script>
+// 主題配置 - 所有主題的定義都在這裡
+const topics = [
+  // 數字應用
+  {
+    section: '數字應用',
+    sectionIcon: '🔢',
+    items: [
+      {id:'G0-1', title:'數字', subtitle:'基本數字單位', cards:10, icon:'1️⃣', color:'#d4a843', file:'topics/G0-1.html'},
+      {id:'G0-2', title:'ที่ + 數字', subtitle:'第幾', cards:4, icon:'2️⃣', color:'#d4a843', file:'topics/G0-2.html'},
+      {id:'G1', title:'量詞 + ที่ + 數字', subtitle:'第幾年/天/人', cards:8, icon:'📊', color:'#2a9d8f', file:'topics/G1.html'},
+      {id:'G2', title:'กี่ + 量詞', subtitle:'問數量', cards:7, icon:'❓', color:'#58a6ff', file:'topics/G2.html'},
+      {id:'G3', title:'名詞 + เบอร์ อะไร', subtitle:'幾號?', cards:8, icon:'🔢', color:'#f0883e', file:'topics/G3.html'},
+      {id:'G4', title:'動詞/形容詞 + เท่าไหร่', subtitle:'多少/多長/多重?', cards:8, icon:'📏', color:'#bc8cff', file:'topics/G4.html'}
+    ]
+  },
+  // 文法句型
+  {
+    section: '文法句型',
+    sectionIcon: '📝',
+    items: [
+      {id:'G5', title:'是…對嗎?', subtitle:'ใช่ไหม?', cards:9, icon:'✅', color:'#3fb950', file:'topics/G5.html'},
+      {id:'G6', title:'會做…', subtitle:'V.+เป็น', cards:5, icon:'💪', color:'#2a9d8f', file:'topics/G6.html'},
+      {id:'G7', title:'不會', subtitle:'ไม่เป็น', cards:5, icon:'❌', color:'#ff6b6b', file:'topics/G7.html'},
+      {id:'G8', title:'形容詞', subtitle:'基礎描述', cards:8, icon:'🎨', color:'#f778ba', file:'topics/G8.html'},
+      {id:'G9', title:'不…', subtitle:'ไม่', cards:6, icon:'🚫', color:'#ff6b6b', file:'topics/G9.html'},
+      {id:'G10', title:'問程度', subtitle:'เท่าไหร่?', cards:5, icon:'📐', color:'#bc8cff', file:'topics/G10.html'},
+      {id:'G11', title:'在哪裡?', subtitle:'ที่ไหน?', cards:5, icon:'📍', color:'#f778ba', file:'topics/G11.html'},
+      {id:'G12', title:'什麼?', subtitle:'อะไร?', cards:5, icon:'❔', color:'#f0883e', file:'topics/G12.html'},
+      {id:'G13', title:'在某地', subtitle:'S. + อยู่ + 地點', cards:5, icon:'🗺️', color:'#f778ba', file:'topics/G13.html'},
+      {id:'G14', title:'現在進行式', subtitle:'กำลัง…อยู่', cards:5, icon:'⏳', color:'#39d0d8', file:'topics/G14.html'}
+    ]
+  },
+  // 常用語
+  {
+    section: '常用語',
+    sectionIcon: '💬',
+    items: [
+      {id:'G15', title:'常用語', subtitle:'Common Phrases', cards:8, icon:'👋', color:'#3fb950', file:'topics/G15.html'}
+    ]
+  },
+  // 單字學習
+  {
+    section: '單字學習',
+    sectionIcon: '📚',
+    items: [
+      {id:'G16', title:'水果', subtitle:'Fruits', cards:13, icon:'🍉', color:'#ff6b9d', file:'topics/G16.html'},
+      {id:'G17', title:'餐食', subtitle:'Meals', cards:11, icon:'🍛', color:'#f0883e', file:'topics/G17.html'},
+      {id:'G18', title:'飲料', subtitle:'Drinks', cards:7, icon:'🍹', color:'#39d0d8', file:'topics/G18.html'},
+      {id:'G19', title:'甜點配料', subtitle:'Desserts', cards:8, icon:'🍮', color:'#f778ba', file:'topics/G19.html'}
+    ]
+  },
+  // 對話練習
+  {
+    section: '對話練習',
+    sectionIcon: '🗣️',
+    items: [
+      {id:'G20', title:'便利商店對話', subtitle:'Conversation', cards:10, icon:'🏪', color:'#58a6ff', file:'topics/G20.html'},
+      {id:'G22', title:'路邊攤點餐對話', subtitle:'Street Food', cards:6, icon:'🍜', color:'#e07b6a', file:'topics/G22.html'}
+    ]
+  }
+];
+
+// 渲染主題列表
+function renderTopics() {
+  const container = document.getElementById('container');
+  let html = '';
+  
+  topics.forEach(section => {
+    const totalCards = section.items.reduce((sum, item) => sum + item.cards, 0);
+    
+    html += `
+      <div class="section">
+        <div class="section-header">
+          <div class="section-icon">${section.sectionIcon}</div>
+          <div class="section-title">${section.section}</div>
+          <div class="section-count">${section.items.length} 主題 · ${totalCards} 卡片</div>
+        </div>
+        <div class="topic-grid">
+    `;
+    
+    section.items.forEach(item => {
+      html += `
+        <a href="${item.file}" class="topic-card" style="--color:${item.color}">
+          <div class="topic-header">
+            <div class="topic-icon">${item.icon}</div>
+            <div class="topic-info">
+              <div class="topic-id">${item.id}</div>
+              <div class="topic-title">${item.title}</div>
+              <div class="topic-subtitle">${item.subtitle}</div>
+            </div>
+          </div>
+          <div class="topic-meta">
+            <div class="topic-cards">${item.cards} 張卡片</div>
+            <div class="topic-arrow">→</div>
+          </div>
+        </a>
+      `;
+    });
+    
+    html += `
+        </div>
+      </div>
+    `;
+  });
+  
+  container.innerHTML = html;
+}
+
+renderTopics();
+</script>
+
+</body>
+</html>
