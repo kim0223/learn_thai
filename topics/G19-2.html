@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>G16 🍉 水果 (Fruits) - 泰語學習卡</title>
+<title>G19-2 🎨 顏色 (Colors) - 泰語學習卡</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Sarabun:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -55,6 +55,7 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 .bk-item.word-playing{animation:blink 0.7s infinite;border-color:var(--teal);}
 .bk-thai{font-family:'Sarabun',sans-serif;font-size:1.1rem;font-weight:600;color:var(--text);}
 .bk-zh{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-dim);}
+.bk-plus{font-size:1.1rem;color:var(--text-dim);align-self:center;}
 .nav-row{width:100%;max-width:560px;display:flex;gap:8px;margin-top:14px;}
 .btn-nav{flex:1;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.9rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
 .btn-nav:hover{border-color:var(--gold);color:var(--text);}
@@ -116,46 +117,36 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 <script src="../shared.js"></script>
 <script>
 const topicData = {
-    id: 'G16',
-    title: '🍉 水果',
-    subtitle: 'Fruits',
-    color: '#ff6b9d',
+    id: 'G19-2',
+    title: '🎨 顏色',
+    subtitle: 'Colors',
+    color: '#bc8cff',
     type: 'vocab',
     concept: {
-        formula: 'คุณ<span class="hl3">อยากกิน</span>ผลไม้ <span class="hl">อะไร</span>?<br>' +
-                 '<span class="phonetic" style="font-size:1.1rem; line-height:1.6; font-weight:400;">khun yàak-gin phǒn-lá-mái à-rai?</span><br>' +
-                 '<span style="font-size:1rem; color:var(--text-dim); font-family:\'DM Mono\',monospace; font-weight:400; line-height:1.6;">你想要吃什麼水果？</span><br><br>' +
-                 'ฉัน/ผม <span class="hl3">อยากกิน</span> <span class="hl2">____</span><br>' +
-                 '<span class="phonetic" style="font-size:1.1rem; line-height:1.6; font-weight:400;">chán/phóm yàak-gin ____</span><br>' +
-                 '<span style="font-size:1rem; color:var(--text-dim); font-family:\'DM Mono\',monospace; font-weight:400; line-height:1.6;">我想要吃____。</span>',
+        formula: 'คุณ<span class="hl3">ชอบ</span>สี <span class="hl">อะไร</span>?<br>' +
+                 '<span class="phonetic" style="font-size:1.1rem; line-height:1.6; font-weight:400;">khun chòr:b sǐi à-rai?</span><br>' +
+                 '<span style="font-size:1rem; color:var(--text-dim); font-family:\'DM Mono\',monospace; font-weight:400; line-height:1.6;">你喜歡什麼顏色？</span><br><br>' +
+                 'ฉัน/ผม <span class="hl3">ชอบ</span>สี <span class="hl2">____</span><br>' +
+                 '<span class="phonetic" style="font-size:1.1rem; line-height:1.6; font-weight:400;">chán/phǒm chòr:b sǐi ____</span><br>' +
+                 '<span style="font-size:1rem; color:var(--text-dim); font-family:\'DM Mono\',monospace; font-weight:400; line-height:1.6;">我喜歡____色。</span>',
         zh: ''
     },
     cards: [
-        {icon:'🍉',th:'ผลไม้',phonetic:'phón-là-mài',zh:'水果',bk:[{t:'ผลไม้',z:'水果'}]},
-        {icon:'🍌',th:'กล้วยหอม',phonetic:'kluày-hór:m',zh:'香蕉',bk:[{t:'กล้วยหอม',z:'香蕉'}]},
-        {icon:'🍈',th:'ขนุน',phonetic:'khà-nún',zh:'波羅蜜',bk:[{t:'ขนุน',z:'波羅蜜'}]},
-        {icon:'🍉',th:'แตงโม',phonetic:'tæ:ng-mòo',zh:'西瓜',bk:[{t:'แตงโม',z:'西瓜'}]},
-        {icon:'🌸',th:'ชมพู่',phonetic:'chôm-phùu',zh:'蓮霧',bk:[{t:'ชมพู่',z:'蓮霧'}]},
-        {icon:'🔴',th:'ทับทิม',phonetic:'thàb-thim',zh:'石榴',bk:[{t:'ทับทิม',z:'石榴'}]},
-        {icon:'🤍',th:'น้อยหน่า',phonetic:'nór:y-náa',zh:'釋迦',bk:[{t:'น้อยหน่า',z:'釋迦'}]},
-        {icon:'🟤',th:'มะขาม',phonetic:'mā-kháam',zh:'羅望子',bk:[{t:'มะขาม',z:'羅望子'}]},
-        {icon:'🍓',th:'ลิ้นจี่',phonetic:'lín-jìi',zh:'荔枝',bk:[{t:'ลิ้นจี่',z:'荔枝'}]},
-        {icon:'🟤',th:'ลำไย',phonetic:'làm-yāi',zh:'龍眼',bk:[{t:'ลำไย',z:'龍眼'}]},
-        {icon:'🍍',th:'สับปะรด',phonetic:'sàb-pà-ròd',zh:'鳳梨',bk:[{t:'สับปะรด',z:'鳳梨'}]},
-        {icon:'🦔',th:'ทุเรียน',phonetic:'thú-ría:n',zh:'榴槤',bk:[{t:'ทุเรียน',z:'榴槤'}]},
-        {icon:'🟣',th:'มังคุด',phonetic:'máng-khūd',zh:'山竹',bk:[{t:'มังคุด',z:'山竹'}]},
-        {icon:'🍓',th:'เงาะ',phonetic:'ngôr',zh:'紅毛丹',bk:[{t:'เงาะ',z:'紅毛丹'}]},
-        {icon:'🥥',th:'มะพร้าว',phonetic:'mā-phràaw',zh:'椰子',bk:[{t:'มะพร้าว',z:'椰子'}]},
-        {icon:'🥭',th:'มะม่วง',phonetic:'mā-mùang',zh:'芒果',bk:[{t:'มะม่วง',z:'芒果'}]},
-        {icon:'🍊',th:'ส้ม',phonetic:'sòm',zh:'橘子',bk:[{t:'ส้ม',z:'橘子'}]},
-        {icon:'🟠',th:'มะละกอ',phonetic:'mā-lá-kòr:',zh:'木瓜',bk:[{t:'มะละกอ',z:'木瓜'}]},
-        {icon:'🍐',th:'ฝรั่ง',phonetic:'fà-ràng',zh:'芭樂',bk:[{t:'ฝรั่ง',z:'芭樂'}]},
-        {icon:'🍇',th:'องุ่น',phonetic:'ā-ngùn',zh:'葡萄',bk:[{t:'องุ่น',z:'葡萄'}]},
-        {icon:'🐉',th:'แก้วมังกร',phonetic:'kæ:w-máng-kòr:n',zh:'火龍果',bk:[{t:'แก้วมังกร',z:'火龍果'}]},
-        {icon:'🍋',th:'มะนาว',phonetic:'mā-náaw',zh:'檸檬',bk:[{t:'มะนาว',z:'檸檬'}]},
-        {icon:'🐍',th:'ระกำ',phonetic:'rà-kàm',zh:'蛇皮果',bk:[{t:'ระกำ',z:'蛇皮果'}]},
-        {icon:'🟣',th:'เสาวรส',phonetic:'sáo-wà-ròd',zh:'百香果',bk:[{t:'เสาวรส',z:'百香果'}]},
-        {icon:'🎋',th:'อ้อย',phonetic:'òr:y',zh:'甘蔗',bk:[{t:'อ้อย',z:'甘蔗'}]}
+        {icon:'👍', th:'ชอบ', phonetic:'chòr:b', zh:'喜歡', bk:[{t:'ชอบ', z:'喜歡'}]},
+        {icon:'🎨', th:'สี', phonetic:'sǐi', zh:'顏色', bk:[{t:'สี', z:'顏色'}]},
+        {icon:'❓', th:'อะไร', phonetic:'à-rai', zh:'什麼', bk:[{t:'อะไร', z:'什麼'}]},
+        {icon:'🟡', th:'สีเหลือง', phonetic:'sǐi-lǔeang', zh:'黃色', bk:[{t:'สี', z:'顏色'}, {t:'เหลือง', z:'黃'}]},
+        {icon:'🌸', th:'สีชมพู', phonetic:'sǐi-chom-phuu', zh:'粉紅色', bk:[{t:'สี', z:'顏色'}, {t:'ชมพู', z:'粉紅'}]},
+        {icon:'🟢', th:'สีเขียว', phonetic:'sǐi-khǐao', zh:'綠色', bk:[{t:'สี', z:'顏色'}, {t:'เขียว', z:'綠'}]},
+        {icon:'🟠', th:'สีส้ม', phonetic:'sǐi-sôm', zh:'橘色', bk:[{t:'สี', z:'顏色'}, {t:'ส้ม', z:'橘'}]},
+        {icon:'🔵', th:'สีฟ้า', phonetic:'sǐi-fáa', zh:'天藍色', bk:[{t:'สี', z:'顏色'}, {t:'ฟ้า', z:'天空'}]},
+        {icon:'🟣', th:'สีม่วง', phonetic:'sǐi-mûang', zh:'紫色', bk:[{t:'สี', z:'顏色'}, {t:'ม่วง', z:'紫'}]},
+        {icon:'🔴', th:'สีแดง', phonetic:'sǐi-daeng', zh:'紅色', bk:[{t:'สี', z:'顏色'}, {t:'แดง', z:'紅'}]},
+        {icon:'💙', th:'สีน้ำเงิน', phonetic:'sǐi-nám-ngoen', zh:'深藍色', bk:[{t:'สี', z:'顏色'}, {t:'น้ำเงิน', z:'藍'}]},
+        {icon:'🟤', th:'สีน้ำตาล', phonetic:'sǐi-nám-dtaan', zh:'棕色', bk:[{t:'สี', z:'顏色'}, {t:'น้ำตาล', z:'糖'}]},
+        {icon:'⚪️', th:'สีเทา', phonetic:'sǐi-thao', zh:'灰色', bk:[{t:'สี', z:'顏色'}, {t:'เทา', z:'灰'}]},
+        {icon:'⚫️', th:'สีดำ', phonetic:'sǐi-dam', zh:'黑色', bk:[{t:'สี', z:'顏色'}, {t:'ดำ', z:'黑'}]},
+        {icon:'⚪️', th:'สีขาว', phonetic:'sǐi-khǎao', zh:'白色', bk:[{t:'สี', z:'顏色'}, {t:'ขาว', z:'白'}]}
     ]
 };
 
