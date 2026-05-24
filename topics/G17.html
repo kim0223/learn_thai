@@ -118,12 +118,17 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 <script>
 const topicData = {
   id: 'G17',
-  title: '餐食',
+  title: '餐食-正餐',
   subtitle: 'Meals',
   color: '#f0883e',
   type: 'vocab',
+  concept: {
+    formula: 'ฉัน/ผม <span class="hl3">อยากกิน</span> <span class="hl2">____</span><br>' +
+             '<span class="phonetic" style="font-size:1.1rem; line-height:1.6; font-weight:400;">chán/phǒm yàak-gin ____</span><br>' +
+             '<span style="font-size:1rem; color:var(--text-dim); font-family:\'DM Mono\',monospace; font-weight:400; line-height:1.6;">我想吃____。</span>',
+    zh: ''
+  },
   cards: [
-    {icon:'🍚',th:'ข้าวเหนียวมะม่วง',phonetic:'khâao-nǐao-má-mûang',zh:'芒果糯米飯',bk:[{t:'ข้าวเหนียว',z:'糯米飯'},{t:'มะม่วง',z:'芒果'}]},
     {icon:'🍲',th:'ต้มยำกุ้ง',phonetic:'dtôm-yam-gûng',zh:'冬蔭功湯',bk:[{t:'ต้มยำกุ้ง',z:'冬蔭功'}]},
     {icon:'🍛',th:'แกงเขียวหวานไก่',phonetic:'gaeng-khǐao-wǎan-gài',zh:'綠咖喱雞',bk:[{t:'แกงเขียวหวาน',z:'綠咖喱'},{t:'ไก่',z:'雞'}]},
     {icon:'🍛',th:'แกงเขียวหวานหมู',phonetic:'gaeng-khǐao-wǎan-mǔu',zh:'綠咖喱豬',bk:[{t:'แกงเขียวหวาน',z:'綠咖喱'},{t:'หมู',z:'豬'}]},
@@ -132,8 +137,8 @@ const topicData = {
     {icon:'🍛',th:'ผัดกะเพราหมู',phonetic:'phàt-gà-phrao-mǔu',zh:'打拋豬',bk:[{t:'ผัดกะเพรา',z:'打拋'},{t:'หมู',z:'豬'}]},
     {icon:'🍛',th:'ผัดกะเพราเนื้อ',phonetic:'phàt-gà-phrao-núea',zh:'打拋牛',bk:[{t:'ผัดกะเพรา',z:'打拋'},{t:'เนื้อ',z:'牛'}]},
     {icon:'🍝',th:'ผัดไทย',phonetic:'phàt-thai',zh:'泰式炒河粉',bk:[{t:'ผัดไทย',z:'泰式炒河粉'}]},
-    {icon:'🍢',th:'หมูปิ้ง',phonetic:'mǔu-bpîng',zh:'泰式烤肉串',bk:[{t:'หมูปิ้ง',z:'烤豬肉'}]},
-    {icon:'🥞',th:'โรตี',phonetic:'roo-dtii',zh:'泰式煎餅',bk:[{t:'โรตี',z:'泰式煎餅'}]}
+    {icon:'🗣️',th:'ตอนกลางวันอยากกินข้าวผัดกะเพราหมู',phonetic:'dtawn-glaang-wan yàak-gin khâao phàt-gà-phrao-mǔu',zh:'我中午想吃打拋豬飯',bk:[{t:'ตอนกลางวัน',z:'中午'},{t:'อยากกิน',z:'想吃'},{t:'ข้าวผัดกะเพราหมู',z:'打拋豬飯'}]},
+    {icon:'🗣️',th:'คุณอยากกินผัดไทยไหม',phonetic:'khun yàak-gin phàt-thai mǎi?',zh:'你想吃泰式炒河粉嗎？',bk:[{t:'คุณ',z:'你'},{t:'อยากกิน',z:'想吃'},{t:'ผัดไทย',z:'泰式炒河粉'},{t:'ไหม',z:'嗎'}]}
   ]
 };
 
