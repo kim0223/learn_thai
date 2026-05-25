@@ -204,6 +204,16 @@ body{
 <script>
 // 主題配置 - 所有主題的定義都在這裡
 const topics = [
+  // 字母
+  {
+    section: '字母',
+    sectionIcon: '🔤',
+    items: [
+      {id:'G0-0-1', title:'中音子音字母', subtitle:'Middle Class Consonants', cards:9, label:'個子音', icon:'ก', color:'#bc8cff', file:'topics/G0-0-1.html'},
+      {id:'G0-0-2', title:'高音子音字母', subtitle:'High Class Consonants',   cards:11, label:'個子音', icon:'ข', color:'#58a6ff', file:'topics/G0-0-2.html'},
+      {id:'G0-0-3', title:'低音子音字母', subtitle:'Low Class Consonants',    cards:24, label:'個子音', icon:'ค', color:'#3fb950', file:'topics/G0-0-3.html'}
+    ]
+  },
   // 數字應用
   {
     section: '數字應用',
@@ -305,7 +315,7 @@ function renderTopics() {
             </div>
           </div>
           <div class="topic-meta">
-            <div class="topic-cards">${item.cards} 張卡片</div>
+            <div class="topic-cards">${item.cards} ${item.label || '張卡片'}</div>
             <div class="topic-arrow">→</div>
           </div>
         </a>
