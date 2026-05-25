@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>G0-0-1-2A จ 短韻母 - 泰語學習卡</title>
+<title>G0-0-1-5C บ 特殊韻母 - 泰語學習卡</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Sarabun:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,7 +28,7 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 .concept-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:5px;}
 .concept-formula{font-family:'Sarabun',sans-serif;font-size:1.35rem;font-weight:600;color:var(--text);line-height:1.8;margin-bottom:2px;}
 .concept-formula .hl{color:var(--violet);}
-.concept-formula .hl2{color:var(--rose);}
+.concept-formula .hl2{color:var(--orange);}
 .concept-zh{font-size:1.0rem;color:var(--text-dim);font-family:'DM Mono',monospace;}
 .progress-wrap{width:100%;max-width:560px;display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .progress-bar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
@@ -90,7 +90,7 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 
 <div class="header-row">
   <div class="header-eyebrow">Thai Learning Cards · 中音子音</div>
-  <div class="header-title">จ 短韻母</div>
+  <div class="header-title">บ 特殊韻母</div>
 </div>
 
 <div class="topic-chip" id="topicChip"></div>
@@ -125,22 +125,19 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 <script src="../shared.js"></script>
 <script>
 const topicData = {
-  id: 'G0-0-1-2A',
-  title: 'จ 短韻母',
-  subtitle: '子音 จ + 短韻母',
+  id: 'G0-0-1-5C',
+  title: 'บ 特殊韻母',
+  subtitle: '子音 บ + 特殊韻母',
   color: '#bc8cff',
   type: 'vocab',
   concept: {
-    formula: '<span class="hl">จ</span> + <span class="hl2">短韻母</span>',
-    zh: '短促下沉 · 中音子音平聲'
+    formula: '<span class="hl">บ</span> + <span class="hl2">特殊韻母</span>',
+    zh: '複合韻母 · 中音子音平聲'
   },
   cards: [
-    {th:'จะ',  phonetic:'ja',  zh:'夾 (短促下沉)',   icon:'🎯', bk:[{t:'จะ',   z:'ja ／ 將要、會（未來式助詞）'}]},
-    {th:'จิ',  phonetic:'ji',  zh:'ㄐㄧ (短促下沉)', icon:'😋', bk:[{t:'จิ้ม', z:'jîm ／ 沾（如：沾醬）'}]},
-    {th:'จุ',  phonetic:'ju',  zh:'租 (短促下沉)',   icon:'📦', bk:[{t:'จุ',   z:'ju ／ 容納、裝入'}]},
-    {th:'เจะ', phonetic:'je',  zh:'姐 (短促下沉)',   icon:'🤕', bk:[{t:'เจ็บ', z:'jep ／ 痛'}]},
-    {th:'แจะ', phonetic:'jae', zh:'債 (短促下沉)',   icon:'🌶️', bk:[{t:'แจ่ว',  z:'jàew ／ 泰式蘸醬'}]},
-    {th:'เจาะ',phonetic:'jao', zh:'照 (短促下沉)',   icon:'🕳️', bk:[{t:'เจาะ', z:'jao ／ 鑽（洞）、穿（孔）'}]}
+    {th:'บำ',  phonetic:'bam',  zh:'班 (平音)', icon:'💆‍♀️', bk:[{t:'บำบัด',  z:'bam-bàt ／ 治療、療養（如：สปาบำบัด SPA療養）'}]},
+    {th:'ใบ',  phonetic:'bai',  zh:'白 (平音)', icon:'🍃', bk:[{t:'ใบไม้',  z:'bai-mái ／ 樹葉（ใบ 單用亦可作葉片狀物品的量詞）'}]},
+    {th:'เบา', phonetic:'bao',  zh:'包 (平音)', icon:'🤫', bk:[{t:'เบา',    z:'bao ／ 輕的、小聲的（如：เบาๆ 輕一點）'}]}
   ]
 };
 
