@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>G0-0-2 高音子音字母</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Sarabun:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#0d1117;--surface:#161b22;--card:#1c2128;--border:#30363d;
+  --blue:#58a6ff;--text:#e6edf3;--text-mid:#adbac7;--text-dim:#7d8590;
+}
+body {
+  min-height:100vh;
+  background:var(--bg);
+  font-family:'Noto Serif TC',serif;
+  padding:24px 16px 60px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+.back-link {
+  font-family:'DM Mono',monospace;
+  font-size:0.8rem;
+  color:var(--text-dim);
+  text-decoration:none;
+  display:inline-block;
+  margin-bottom:24px;
+  transition:color 0.2s;
+}
+.back-link:hover { color:var(--blue); }
+.header { width:100%; max-width:860px; margin-bottom:28px; }
+.header-eyebrow {
+  font-family:'DM Mono',monospace;
+  font-size:0.7rem;
+  letter-spacing:0.35em;
+  color:var(--text-dim);
+  text-transform:uppercase;
+  margin-bottom:8px;
+}
+.header-title { font-size:1.9rem; color:var(--blue); font-weight:700; margin-bottom:6px; }
+.header-subtitle { font-size:0.9rem; color:var(--text-mid); }
+.container { width:100%; max-width:860px; }
+
+/* ── Desktop: table ── */
+table.consonant-table {
+  width:100%;
+  border-collapse:collapse;
+  background:var(--card);
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 4px 16px rgba(0,0,0,0.3);
+}
+.consonant-table thead tr { background:var(--surface); }
+.consonant-table th {
+  color:var(--text-dim);
+  font-family:'DM Mono',monospace;
+  font-size:0.72rem;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  padding:13px 16px;
+  text-align:center;
+  border-bottom:2px solid var(--border);
+  font-weight:500;
+}
+.consonant-table th:first-child { text-align:left; }
+.consonant-table td {
+  padding:13px 16px;
+  border-bottom:1px solid var(--border);
+  text-align:center;
+  vertical-align:middle;
+}
+.consonant-table tbody tr:last-child td { border-bottom:none; }
+.consonant-table tbody tr:hover td { background:rgba(255,255,255,0.02); }
+
+/* Letter cell */
+.letter-cell { display:flex; align-items:center; gap:12px; }
+.letter-thai {
+  font-family:'Sarabun',sans-serif;
+  font-size:2.4rem;
+  color:var(--blue);
+  font-weight:600;
+  line-height:1;
+  min-width:44px;
+  text-align:center;
+}
+.letter-phoneme {
+  font-family:'DM Mono',monospace;
+  font-size:0.78rem;
+  color:var(--text-mid);
+}
+
+/* Vowel buttons */
+.vowel-btn {
+  display:inline-block;
+  font-family:'DM Mono',monospace;
+  font-size:0.72rem;
+  padding:6px 14px;
+  border-radius:8px;
+  text-decoration:none;
+  transition:all 0.2s;
+  white-space:nowrap;
+}
+.vowel-btn.available {
+  background:rgba(88,166,255,0.1);
+  border:1px solid rgba(88,166,255,0.35);
+  color:var(--blue);
+}
+.vowel-btn.available:hover {
+  background:rgba(88,166,255,0.22);
+  border-color:var(--blue);
+  transform:translateY(-1px);
+  box-shadow:0 2px 8px rgba(88,166,255,0.2);
+}
+.vowel-btn.pending {
+  background:var(--surface);
+  border:1px dashed var(--border);
+  color:var(--text-dim);
+  cursor:default;
+  pointer-events:none;
+  opacity:0.45;
+}
+
+/* Legend */
+.legend {
+  display:flex; gap:20px; margin-top:18px;
+  font-family:'DM Mono',monospace; font-size:0.72rem; color:var(--text-dim); align-items:center;
+}
+.legend-item { display:flex; align-items:center; gap:6px; }
+.legend-dot { width:8px; height:8px; border-radius:50%; }
+.legend-dot.available { background:var(--blue); }
+.legend-dot.pending   { background:var(--border); }
+
+/* Footer */
+.footer { width:100%; max-width:860px; margin-top:40px; padding-top:20px; border-top:1px solid var(--border); text-align:center; }
+.footer-text { font-family:'DM Mono',monospace; font-size:0.75rem; color:var(--text-dim); }
+
+/* ── Mobile: card layout ── */
+@media (max-width:639px) {
+  .consonant-table {
+    display:block; background:transparent; box-shadow:none; border-radius:0; overflow:visible;
+  }
+  .consonant-table thead { display:none; }
+  .consonant-table tbody { display:block; }
+
+  .consonant-table tbody tr {
+    display:flex; flex-wrap:wrap;
+    background:var(--card); border:1px solid var(--border); border-radius:12px;
+    margin-bottom:12px; padding:14px;
+  }
+  .consonant-table tbody tr:last-child { margin-bottom:0; }
+  .consonant-table td { display:block; border:none; padding:0; }
+
+  /* Letter: full width */
+  .consonant-table td:first-child {
+    flex:0 0 100%;
+    padding-bottom:12px; margin-bottom:12px;
+    border-bottom:1px solid var(--border);
+  }
+
+  /* Three vowel cells in a row */
+  .consonant-table td:not(:first-child) {
+    flex:0 0 33.33%;
+    display:flex; align-items:center; justify-content:center;
+    padding:0 3px;
+  }
+
+  .vowel-btn { width:100%; text-align:center; padding:8px 4px; font-size:0.7rem; }
+}
+</style>
+</head>
+<body>
+
+<div style="width:100%;max-width:860px;padding-bottom:8px;">
+  <a href="../index.html" class="back-link">← 返回主目錄</a>
+</div>
+
+<div class="header">
+  <div class="header-eyebrow">G0-0-2 · High Class Consonants</div>
+  <div class="header-title">高音子音字母</div>
+  <div class="header-subtitle">共 10 個子音 · 點擊韻母類型進入學習卡</div>
+</div>
+
+<div class="container">
+  <table class="consonant-table">
+    <thead>
+      <tr>
+        <th>字母</th>
+        <th>短韻母</th>
+        <th>長韻母</th>
+        <th>特殊韻母</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ข</div><div class="letter-phoneme">[kh]</div></div></td>
+        <td><a href="G0-0-2-1A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-1B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-1C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ฉ</div><div class="letter-phoneme">[ch]</div></div></td>
+        <td><a href="G0-0-2-2A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-2B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-2C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ฐ</div><div class="letter-phoneme">[th]</div></div></td>
+        <td><a href="G0-0-2-3A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-3B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-3C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ถ</div><div class="letter-phoneme">[th]</div></div></td>
+        <td><a href="G0-0-2-4A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-4B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-4C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ผ</div><div class="letter-phoneme">[ph]</div></div></td>
+        <td><a href="G0-0-2-5A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-5B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-5C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ฝ</div><div class="letter-phoneme">[f]</div></div></td>
+        <td><a href="G0-0-2-6A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-6B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-6C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ศ</div><div class="letter-phoneme">[s]</div></div></td>
+        <td><a href="G0-0-2-7A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-7B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-7C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ษ</div><div class="letter-phoneme">[s]</div></div></td>
+        <td><a href="G0-0-2-8A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-8B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-8C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ส</div><div class="letter-phoneme">[s]</div></div></td>
+        <td><a href="G0-0-2-9A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-9B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-9C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+      <tr>
+        <td><div class="letter-cell"><div class="letter-thai">ห</div><div class="letter-phoneme">[h]</div></div></td>
+        <td><a href="G0-0-2-10A.html" class="vowel-btn available">短韻母</a></td>
+        <td><a href="G0-0-2-10B.html" class="vowel-btn available">長韻母</a></td>
+        <td><a href="G0-0-2-10C.html" class="vowel-btn available">特殊韻母</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot available"></div> 已建立</div>
+    <div class="legend-item"><div class="legend-dot pending"></div> 待新增</div>
+  </div>
+</div>
+
+<div class="footer">
+  <div class="footer-text">G0-0-2 · 高音子音字母 · 泰語學習卡 v3</div>
+</div>
+
+</body>
+</html>
