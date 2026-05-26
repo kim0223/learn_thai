@@ -76,6 +76,11 @@ table.consonant-table {
 
 /* Letter cell */
 .letter-cell { display:flex; align-items:center; gap:12px; }
+.letter-info {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
 .letter-thai {
   font-family:'Sarabun',sans-serif;
   font-size:2.4rem;
@@ -89,6 +94,58 @@ table.consonant-table {
   font-family:'DM Mono',monospace;
   font-size:0.78rem;
   color:var(--text-mid);
+}
+.letter-example {
+  font-family:'Sarabun',sans-serif;
+  font-size:0.85rem;
+  color:var(--text);
+  margin-top:6px;
+  padding-top:6px;
+  border-top:1px solid var(--border);
+}
+.example-word {
+  font-weight:600;
+  color:var(--blue);
+  display:inline;
+}
+.example-meaning {
+  font-family:'Noto Serif TC',serif;
+  font-size:0.75rem;
+  color:var(--text-mid);
+  display:inline;
+  margin-left:6px;
+}
+.example-word-container {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+.play-btn {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:20px;
+  height:20px;
+  background:rgba(88,166,255,0.2);
+  border:1px solid rgba(88,166,255,0.4);
+  border-radius:4px;
+  cursor:pointer;
+  transition:all 0.2s;
+  font-size:10px;
+  color:var(--blue);
+  line-height:1;
+}
+.play-btn:hover {
+  background:rgba(88,166,255,0.35);
+  border-color:var(--blue);
+  transform:scale(1.1);
+}
+.play-btn.playing {
+  animation:pulse 0.6s ease-in-out;
+}
+@keyframes pulse {
+  0%, 100% { background:rgba(88,166,255,0.2); }
+  50% { background:rgba(88,166,255,0.5); }
 }
 
 /* Vowel buttons */
@@ -194,61 +251,61 @@ table.consonant-table {
     </thead>
     <tbody>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ข</div><div class="letter-phoneme">[kh]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ข</div></div><div class="letter-phoneme">[kh]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">ไข่</span><button class="play-btn" data-word="ไข่" title="播放發音">▶</button></div><span class="example-meaning">(khai - 雞蛋)</span></div></div></td>
         <td><a href="G0-0-2-1A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-1B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-1C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ฉ</div><div class="letter-phoneme">[ch]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ฉ</div></div><div class="letter-phoneme">[ch]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">ฉัตร</span><button class="play-btn" data-word="ฉัตร" title="播放發音">▶</button></div><span class="example-meaning">(chaat - 伞)</span></div></div></td>
         <td><a href="G0-0-2-2A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-2B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-2C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ฐ</div><div class="letter-phoneme">[th]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ฐ</div></div><div class="letter-phoneme">[th]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">ฐาน</span><button class="play-btn" data-word="ฐาน" title="播放發音">▶</button></div><span class="example-meaning">(thaan - 底座)</span></div></div></td>
         <td><a href="G0-0-2-3A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-3B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-3C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ถ</div><div class="letter-phoneme">[th]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ถ</div></div><div class="letter-phoneme">[th]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">ถนน</span><button class="play-btn" data-word="ถนน" title="播放發音">▶</button></div><span class="example-meaning">(thanon - 街道)</span></div></div></td>
         <td><a href="G0-0-2-4A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-4B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-4C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ผ</div><div class="letter-phoneme">[ph]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ผ</div></div><div class="letter-phoneme">[ph]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">ผ้า</span><button class="play-btn" data-word="ผ้า" title="播放發音">▶</button></div><span class="example-meaning">(pha - 布料)</span></div></div></td>
         <td><a href="G0-0-2-5A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-5B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-5C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ฝ</div><div class="letter-phoneme">[f]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ฝ</div></div><div class="letter-phoneme">[f]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">ฝ้าย</span><button class="play-btn" data-word="ฝ้าย" title="播放發音">▶</button></div><span class="example-meaning">(fai - 棽花)</span></div></div></td>
         <td><a href="G0-0-2-6A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-6B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-6C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ศ</div><div class="letter-phoneme">[s]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ศ</div></div><div class="letter-phoneme">[s]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">ศาลา</span><button class="play-btn" data-word="ศาลา" title="播放發音">▶</button></div><span class="example-meaning">(sala - 中冤)</span></div></div></td>
         <td><a href="G0-0-2-7A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-7B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-7C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ษ</div><div class="letter-phoneme">[s]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ษ</div></div><div class="letter-phoneme">[s]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">ฤษิ</span><button class="play-btn" data-word="ฤษิ" title="播放發音">▶</button></div><span class="example-meaning">(ri-si - 仙人)</span></div></div></td>
         <td><a href="G0-0-2-8A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-8B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-8C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ส</div><div class="letter-phoneme">[s]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ส</div></div><div class="letter-phoneme">[s]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">สวน</span><button class="play-btn" data-word="สวน" title="播放發音">▶</button></div><span class="example-meaning">(suan - 花府)</span></div></div></td>
         <td><a href="G0-0-2-9A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-9B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-9C.html" class="vowel-btn available">特殊韻母</a></td>
       </tr>
       <tr>
-        <td><div class="letter-cell"><div class="letter-thai">ห</div><div class="letter-phoneme">[h]</div></div></td>
+        <td><div class="letter-cell"><div class="letter-info"><div><div class="letter-thai">ห</div></div><div class="letter-phoneme">[h]</div></div><div class="letter-example"><div class="example-word-container"><span class="example-word">หัวใจ</span><button class="play-btn" data-word="หัวใจ" title="播放發音">▶</button></div><span class="example-meaning">(hua-jai - 心)</span></div></div></td>
         <td><a href="G0-0-2-10A.html" class="vowel-btn available">短韻母</a></td>
         <td><a href="G0-0-2-10B.html" class="vowel-btn available">長韻母</a></td>
         <td><a href="G0-0-2-10C.html" class="vowel-btn available">特殊韻母</a></td>
@@ -265,6 +322,31 @@ table.consonant-table {
 <div class="footer">
   <div class="footer-text">G0-0-2 · 高音子音字母 · 泰語學習卡 v3</div>
 </div>
+
+<script>
+// 語音播放功能
+document.querySelectorAll('.play-btn').forEach(btn => {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+    const word = this.getAttribute('data-word');
+    
+    // 停止正在播放的語音
+    window.speechSynthesis.cancel();
+    
+    // 添加播放動畫
+    this.classList.add('playing');
+    setTimeout(() => this.classList.remove('playing'), 600);
+    
+    // 創建語音合成
+    const utterance = new SpeechSynthesisUtterance(word);
+    utterance.lang = 'th-TH';  // 泰語
+    utterance.rate = 0.9;      // 略微放慢速度
+    utterance.pitch = 1.0;     // 正常音高
+    
+    window.speechSynthesis.speak(utterance);
+  });
+});
+</script>
 
 </body>
 </html>
