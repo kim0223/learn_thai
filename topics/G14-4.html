@@ -38,6 +38,7 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 .card-num{position:absolute;top:14px;right:16px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-dim);}
 .thai-sentence{font-family:'Sarabun',sans-serif;font-size:2.3rem;font-weight:700;color:var(--text);line-height:1.45;margin-bottom:10px;}
 .thai-sentence .p-s{color:var(--blue);}.thai-sentence .p-v{color:var(--teal);}.thai-sentence .p-o{color:var(--rose);}.thai-sentence .p-key{color:var(--gold);}.thai-sentence .p-tail{color:var(--violet);}.thai-sentence .p-neg{color:#ff6b6b;}.thai-sentence .p-prog{color:var(--cyan);}.thai-sentence .p-loc{color:var(--pink);}
+.phonetic .p-s{color:var(--blue);}.phonetic .p-v{color:var(--teal);}.phonetic .p-o{color:var(--rose);}.phonetic .p-key{color:var(--gold);}.phonetic .p-tail{color:var(--violet);}.phonetic .p-neg{color:#ff6b6b;}.phonetic .p-prog{color:var(--cyan);}.phonetic .p-loc{color:var(--pink);}
 .phonetic{font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--gold);margin-bottom:5px;line-height:1.5;}
 .zh-meaning{font-size:1.25rem;color:var(--text-mid);margin-bottom:14px;line-height:1.6;}
 .speak-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
@@ -134,7 +135,7 @@ const topicData = {
     {label:'疑問',color:'var(--gold)'}
   ],
   cards: [
-    {icon:'🧑‍🍳',th:'คุณ ทำอาหารจีนเป็น หรือเปล่า',phonetic:'khun tham aa-hǎan jiin bpen rǔue-bplào?',zh:'你是否會做中國菜？',bk:[{t:'คุณ',z:'你',c:'s'},{t:'ทำอาหารจีน',z:'做中國菜',c:'v'},{t:'เป็น',z:'會',c:'v'},{t:'หรือเปล่า',z:'是否',c:'k'}]},
+    {icon:'🧑‍🍳',th:'คุณ ทำอาหารจีนเป็น หรือเปล่า',phonetic:'<span class="p-s">khun</span> <span class="p-v">tham aa-hǎan jiin bpen</span> <span class="p-key">rǔue-bplào?</span>',zh:'你是否會做中國菜？',bk:[{t:'คุณ',z:'你',c:'s'},{t:'ทำอาหารจีนเป็น',z:'做中國菜',c:'v'},{t:'หรือเปล่า',z:'是否',c:'k'}]},
     {icon:'🧋',th:'ที่นี่ มีขายชาเย็น หรือเปล่า',phonetic:'thîi-nîi mii khǎai chaa-yen rǔue-bplào?',zh:'這裡是否有賣泰式奶茶？',bk:[{t:'ที่นี่',z:'這裡',c:'s'},{t:'มีขาย',z:'有賣',c:'v'},{t:'ชาเย็น',z:'泰式奶茶',c:'o'},{t:'หรือเปล่า',z:'是否',c:'k'}]},
     {icon:'✏️',th:'ซื้อดินสอโหลหนึ่ง ลดราคาหน่อยได้หรือเปล่า',phonetic:'súue din-sǒo nèung lǒo, lót raa-khaa nòi dâi rǔue-bplào?',zh:'買一打鉛筆是否可以便宜一些？',bk:[{t:'ซื้อดินสอโหลหนึ่ง',z:'買一打鉛筆'},{t:'ลดราคาหน่อย',z:'便宜一點',c:'v'},{t:'ได้',z:'可以',c:'v'},{t:'หรือเปล่า',z:'是否',c:'k'}]},
     {icon:'😋',th:'ขอชิมหน่อยได้หรือเปล่า',phonetic:'khǒo chim nòi dâi rǔue-bplào?',zh:'是否可以嚐一下？',bk:[{t:'ขอ',z:'請求',c:'v'},{t:'ชิมหน่อย',z:'嚐一下',c:'v'},{t:'ได้',z:'可以',c:'v'},{t:'หรือเปล่า',z:'是否',c:'k'}]}

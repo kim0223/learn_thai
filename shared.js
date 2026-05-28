@@ -24,8 +24,79 @@ if(window.speechSynthesis){
   }
 }
 
+var phoneticColorStylesInjected = false;
+
+function injectPhoneticColorStyles(){
+  if(phoneticColorStylesInjected || !document.head) return;
+  phoneticColorStylesInjected = true;
+  var style = document.createElement('style');
+  style.textContent = '.phonetic .part-classifier{color:var(--teal);}.phonetic .part-thii{color:var(--gold);}.phonetic .part-num{color:var(--rose);}.phonetic .p-s{color:var(--blue);}.phonetic .p-v{color:var(--teal);}.phonetic .p-o{color:var(--rose);}.phonetic .p-key{color:var(--gold);}.phonetic .p-tail{color:var(--violet);}.phonetic .p-neg{color:#ff6b6b;}.phonetic .p-prog{color:var(--cyan);}.phonetic .p-loc{color:var(--pink);}';
+  document.head.appendChild(style);
+}
+
+function colorizePhonetic(card,bkData,topicType){
+  if(!card || !card.phonetic) return '';
+  if(/<span\b/i.test(card.phonetic)) return card.phonetic;
+  if(!bkData || !bkData.length) return card.phonetic;
+
+  var clsFn;
+  if(topicType==='number' || topicType==='ordinal'){
+    clsFn = function(b){ return b.c==='k' ? 'part-thii' : (b.c==='v' ? 'part-classifier' : 'part-num'); };
+  } else if(topicType==='question'){
+    clsFn = function(b){ return {k:'part-thii',v:'part-classifier',s:'part-num'}[b.c] || 'part-thii'; };
+  } else {
+    clsFn = function(b){ return {s:'p-s',v:'p-v',o:'p-o',k:'p-key',t:'p-tail',n:'p-neg',p:'p-prog',l:'p-loc'}[b.c] || 'p-key'; };
+  }
+
+  var text = card.phonetic.trim();
+  if(text==='') return card.phonetic;
+
+  var words = text.split(/\s+/);
+  if(words.length === 0) return card.phonetic;
+  if(bkData.length === 1) return '<span class="'+clsFn(bkData[0])+'">'+card.phonetic+'</span>';
+  if(words.length === bkData.length){
+    return words.map(function(w,i){ return '<span class="'+clsFn(bkData[i])+'">'+w+'</span>'; }).join(' ');
+  }
+
+  var tokenLens = words.map(function(w){ return w.replace(/[^A-Za-z0-9\u00C0-\u017F\u0180-\u024F\u1E00-\u1EFF]/g,'').length; });
+  var segLens = bkData.map(function(b){ return b.t.replace(/\s+/g,'').length; });
+  var m = bkData.length, n = words.length;
+  var dp = Array.from({length:m+1}, function(){ return Array(n+1).fill(Infinity); });
+  var choice = Array.from({length:m+1}, function(){ return Array(n+1).fill(1); });
+  dp[0][0] = 0;
+
+  for(var i=1;i<=m;i++){
+    for(var j=i;j<=n;j++){
+      for(var k=1;k<=j-(i-1);k++){
+        var sum = 0;
+        for(var t=j-k;t<j;t++) sum += tokenLens[t];
+        var cost = Math.abs(segLens[i-1] - sum);
+        var score = dp[i-1][j-k] + cost;
+        if(score < dp[i][j]){
+          dp[i][j] = score;
+          choice[i][j] = k;
+        }
+      }
+    }
+  }
+
+  if(!isFinite(dp[m][n])) return '<span class="'+clsFn(bkData[0])+'">'+card.phonetic+'</span>';
+
+  var groups = [];
+  var j = n;
+  for(var i=m;i>0;i--){
+    var k = choice[i][j];
+    var start = j - k;
+    groups.unshift({ text: words.slice(start,j).join(' '), cls: clsFn(bkData[i-1]) });
+    j = start;
+  }
+
+  return groups.map(function(g){ return '<span class="'+g.cls+'">'+g.text+'</span>'; }).join(' ');
+}
+
 function initTopic(topicData){
   currentTopic = topicData;
+  injectPhoneticColorStyles();
   render();
 }
 
@@ -58,24 +129,24 @@ function render(){
   if(currentTopic.type==='number'||currentTopic.type==='ordinal'){
     var thaiDisp=bkData.map(function(b){return '<span class="part-'+(b.c==='k'?'thii':(b.c==='v'?'classifier':'num'))+'">'+b.t+'</span>';}).join(' ');
     bkHTML=bkData.map(function(b,i){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>'+(i<bkData.length-1?'<div class="bk-plus">+</div>':'');}).join('');
-    cardHTML+='<div class="card-top"><div class="num-badge">'+(c.icon||'#')+'</div><div class="card-main"><div class="thai-expr">'+thaiDisp+'</div><div class="phonetic">'+c.phonetic+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
+    cardHTML+='<div class="card-top"><div class="num-badge">'+(c.icon||'#')+'</div><div class="card-main"><div class="thai-expr">'+thaiDisp+'</div><div class="phonetic">'+colorizePhonetic(c,bkData,currentTopic.type)+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
   } else if(currentTopic.type==='phrase'||currentTopic.type==='vocab'){
     bkHTML=bkData.map(function(b){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>';}).join('');
-    cardHTML+='<div class="card-top"><div class="card-icon">'+(c.icon||'💬')+'</div><div class="card-main"><div class="thai-expr">'+c.th+'</div><div class="phonetic">'+c.phonetic+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
+    cardHTML+='<div class="card-top"><div class="card-icon">'+(c.icon||'💬')+'</div><div class="card-main"><div class="thai-expr">'+c.th+'</div><div class="phonetic">'+colorizePhonetic(c,bkData,currentTopic.type)+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
   } else if(currentTopic.type==='question'){
     var thaiDisp2=bkData.map(function(b){var cls={k:'part-thii',v:'part-classifier',s:'part-num'}[b.c]||'part-thii';return '<span class="'+cls+'">'+b.t+'</span>';}).join(' ');
     bkHTML=bkData.map(function(b,i){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>'+(i<bkData.length-1?'<div class="bk-plus">+</div>':'');}).join('');
-    cardHTML+='<div class="card-top"><div class="card-icon">'+(c.icon||'💡')+'</div><div class="card-main"><div class="thai-expr">'+thaiDisp2+'</div><div class="phonetic">'+c.phonetic+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
+    cardHTML+='<div class="card-top"><div class="card-icon">'+(c.icon||'💡')+'</div><div class="card-main"><div class="thai-expr">'+thaiDisp2+'</div><div class="phonetic">'+colorizePhonetic(c,bkData,currentTopic.type)+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div></div></div>';
   } else if(currentTopic.type==='dialogue'){
     var roleCls=c.role||'a';
     bkHTML=bkData.map(function(b){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>';}).join('');
-    cardHTML+='<div class="dialogue-bubble '+roleCls+'"><div class="dialogue-icon">'+(c.speakerIcon||'💬')+'</div><div class="dialogue-body"><div class="dialogue-name">'+(c.speakerZh||'')+'</div><div class="dialogue-thai">'+c.fullThai+'</div>'+(c.phonetic?'<div class="phonetic">'+c.phonetic+'</div>':'')+'<div class="dialogue-zh">'+c.zh+'</div></div></div>';
+    cardHTML+='<div class="dialogue-bubble '+roleCls+'"><div class="dialogue-icon">'+(c.speakerIcon||'💬')+'</div><div class="dialogue-body"><div class="dialogue-name">'+(c.speakerZh||'')+'</div><div class="dialogue-thai">'+c.fullThai+'</div>'+(c.phonetic?'<div class="phonetic">'+colorizePhonetic(c,bkData,currentTopic.type)+'</div>':'')+'<div class="dialogue-zh">'+c.zh+'</div></div></div>';
     cardHTML+='<div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div>';
   } else {
     var cm={s:'p-s',v:'p-v',o:'p-o',k:'p-key',t:'p-tail',n:'p-neg',p:'p-prog',l:'p-loc'};
     var thaiDisp3=bkData.map(function(b){return '<span class="'+(cm[b.c]||'p-key')+'">'+b.t+'</span>';}).join(' ');
     bkHTML=bkData.map(function(b,i){return '<div class="bk-item" onclick="speakWord(\''+b.t+'\',this)"><div class="bk-thai">'+b.t+'</div><div class="bk-zh">'+b.z+'</div></div>'+(i<bkData.length-1?'<div class="bk-plus">+</div>':'');}).join('');
-    cardHTML+='<div class="thai-sentence">'+thaiDisp3+'</div><div class="phonetic">'+c.phonetic+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div>';
+    cardHTML+='<div class="thai-sentence">'+thaiDisp3+'</div><div class="phonetic">'+colorizePhonetic(c,bkData,currentTopic.type)+'</div><div class="zh-meaning">'+c.zh+'</div><div class="speak-row"><button class="btn-speak th" onclick="speakThai(this)">🔊 泰語</button><button class="btn-speak zh" onclick="speakZh(this)">🔊 中文</button></div>';
   }
 
   if(bkHTML){
