@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>G14-1 然後你呢？ (แล้วคุณล่ะ?) - 泰語學習卡</title>
+<title>G0-0-3-20A ฬ 短韻母 - 泰語學習卡</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Sarabun:wght@300;400;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -14,18 +14,21 @@
   --text:#e6edf3;--text-mid:#adbac7;--text-dim:#7d8590;
 }
 body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;align-items:center;font-family:'Noto Serif TC',serif;padding:24px 16px 60px;}
-.back-btn{width:100%;max-width:560px;margin-bottom:14px;display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.85rem;cursor:pointer;transition:all 0.2s;text-decoration:none;}
-.back-btn:hover{border-color:var(--gold);color:var(--text);}
+.back-row{width:100%;max-width:560px;display:flex;gap:8px;margin-bottom:14px;}
+.back-btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 12px;border-radius:8px;background:var(--surface);border:1px solid var(--border);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.82rem;cursor:pointer;transition:all 0.2s;text-decoration:none;}
+.back-btn.layer:hover{border-color:var(--green);color:var(--green);}
+.back-btn.home:hover{border-color:var(--gold);color:var(--gold);}
 .header-row{width:100%;max-width:560px;text-align:center;margin-bottom:14px;}
 .header-eyebrow{font-family:'DM Mono',monospace;font-size:0.7rem;letter-spacing:0.35em;color:var(--text-dim);text-transform:uppercase;margin-bottom:4px;}
-.header-title{font-size:1.4rem;color:var(--gold);font-weight:700;}
+.header-title{font-size:1.4rem;color:var(--green);font-weight:700;}
 .topic-chip{width:100%;max-width:560px;margin-bottom:11px;display:flex;align-items:center;gap:8px;padding:6px 12px;border-radius:100px;background:var(--surface);border:1px solid var(--border);}
 .topic-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .topic-text{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--text-mid);flex:1;}
-.concept-box{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:10px;padding:12px 15px;margin-bottom:11px;}
+.concept-box{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--green);border-radius:10px;padding:12px 15px;margin-bottom:11px;}
 .concept-label{font-family:'DM Mono',monospace;font-size:0.65rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:5px;}
 .concept-formula{font-family:'Sarabun',sans-serif;font-size:1.35rem;font-weight:600;color:var(--text);line-height:1.8;margin-bottom:2px;}
-.concept-formula .hl{color:var(--gold);}.concept-formula .hl2{color:var(--rose);}.concept-formula .hl3{color:var(--teal);}.concept-formula .hl4{color:var(--blue);}
+.concept-formula .hl{color:var(--green);}
+.concept-formula .hl2{color:var(--rose);}
 .concept-zh{font-size:1.0rem;color:var(--text-dim);font-family:'DM Mono',monospace;}
 .progress-wrap{width:100%;max-width:560px;display:flex;align-items:center;gap:12px;margin-bottom:10px;}
 .progress-bar{flex:1;height:3px;background:var(--border);border-radius:2px;overflow:hidden;}
@@ -36,27 +39,31 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 .card-stripe{position:absolute;top:0;left:0;right:0;height:2px;}
 .card-num{position:absolute;top:14px;right:16px;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--text-dim);}
-.thai-sentence{font-family:'Sarabun',sans-serif;font-size:2.3rem;font-weight:700;color:var(--text);line-height:1.45;margin-bottom:10px;}
-.thai-sentence .p-s{color:var(--blue);}.thai-sentence .p-v{color:var(--teal);}.thai-sentence .p-o{color:var(--rose);}.thai-sentence .p-key{color:var(--gold);}.thai-sentence .p-tail{color:var(--violet);}.thai-sentence .p-neg{color:#ff6b6b;}.thai-sentence .p-prog{color:var(--cyan);}.thai-sentence .p-loc{color:var(--pink);}
-.phonetic{font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--gold);margin-bottom:5px;line-height:1.5;}
-.zh-meaning{font-size:1.25rem;color:var(--text-mid);margin-bottom:14px;line-height:1.6;}
+.card-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:16px;}
+.card-icon{display:none;}
+.card-main{flex:1;}
+.thai-expr{font-family:'Sarabun',sans-serif;font-size:2.8rem;font-weight:700;color:var(--text);line-height:1.25;margin-bottom:8px;}
+.phonetic{font-family:'DM Mono',monospace;font-size:1.1rem;color:var(--green);margin-bottom:5px;line-height:1.5;}
+.zh-meaning{font-size:1.15rem;color:var(--text-mid);margin-bottom:14px;line-height:1.6;}
 .speak-row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:14px;}
 .btn-speak{display:inline-flex;align-items:center;gap:5px;padding:7px 15px;border-radius:6px;border:1px solid var(--border);background:var(--surface);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.88rem;cursor:pointer;transition:all 0.2s;}
-.btn-speak.th:hover{border-color:var(--teal);color:var(--teal);}.btn-speak.zh:hover{border-color:var(--blue);color:var(--blue);}
-.btn-speak.playing{animation:blink 0.7s infinite;}.btn-speak.th.playing{border-color:var(--teal);color:var(--teal);}.btn-speak.zh.playing{border-color:var(--blue);color:var(--blue);}
+.btn-speak.th:hover{border-color:var(--teal);color:var(--teal);}
+.btn-speak.zh:hover{border-color:var(--blue);color:var(--blue);}
+.btn-speak.playing{animation:blink 0.7s infinite;}
+.btn-speak.th.playing{border-color:var(--teal);color:var(--teal);}
+.btn-speak.zh.playing{border-color:var(--blue);color:var(--blue);}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 .breakdown{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:10px 12px;}
 .breakdown-title{font-family:'DM Mono',monospace;font-size:0.8rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:7px;}
 .breakdown-row{display:flex;gap:5px;flex-wrap:wrap;align-items:center;}
 .bk-item{display:flex;flex-direction:column;align-items:center;background:var(--card);border:1px solid var(--border);border-radius:6px;padding:5px 9px;gap:2px;cursor:pointer;transition:all 0.18s;user-select:none;}
-.bk-item:hover{border-color:var(--teal);transform:translateY(-1px);}
-.bk-item.word-playing{animation:blink 0.7s infinite;border-color:var(--teal);}
+.bk-item:hover{border-color:var(--green);transform:translateY(-1px);}
+.bk-item.word-playing{animation:blink 0.7s infinite;border-color:var(--green);}
 .bk-thai{font-family:'Sarabun',sans-serif;font-size:1.1rem;font-weight:600;color:var(--text);}
 .bk-zh{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--text-dim);}
-.bk-plus{font-size:1.1rem;color:var(--text-dim);align-self:center;}
 .nav-row{width:100%;max-width:560px;display:flex;gap:8px;margin-top:14px;}
 .btn-nav{flex:1;padding:12px;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-mid);font-family:'DM Mono',monospace;font-size:0.9rem;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px;}
-.btn-nav:hover{border-color:var(--gold);color:var(--text);}
+.btn-nav:hover{border-color:var(--green);color:var(--text);}
 .btn-nav:active{transform:scale(0.97);}
 .loop-controls{width:100%;max-width:560px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;margin-top:14px;}
 .loop-header{font-family:'DM Mono',monospace;font-size:0.75rem;letter-spacing:0.2em;color:var(--text-dim);text-transform:uppercase;margin-bottom:10px;}
@@ -76,11 +83,14 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 </head>
 <body>
 
-<a href="../index.html" class="back-btn">← 返回主目錄</a>
+<div class="back-row">
+  <a href="G0-0-3.html" class="back-btn layer">← 上一層</a>
+  <a href="../index.html" class="back-btn home">🏠 主目錄</a>
+</div>
 
 <div class="header-row">
-  <div class="header-eyebrow">Thai Learning Cards</div>
-  <div class="header-title">泰語學習卡 v3</div>
+  <div class="header-eyebrow">Thai Learning Cards · 低音子音</div>
+  <div class="header-title">ฬ 短韻母</div>
 </div>
 
 <div class="topic-chip" id="topicChip"></div>
@@ -115,22 +125,22 @@ body{min-height:100vh;background:var(--bg);display:flex;flex-direction:column;al
 <script src="../shared.js"></script>
 <script>
 const topicData = {
-  id: 'G14-1',
-  title: '那你呢？',
-  subtitle: 'แล้วคุณล่ะ?',
-  color: '#58a6ff',
-  type: 'grammar',
+  id: 'G0-0-3-20A',
+  title: 'ฬ 短韻母',
+  subtitle: '子音 ฬ + 短韻母',
+  color: '#3fb950',
+  type: 'vocab',
   concept: {
-    formula: '<span class="hl2">句子</span> + <span class="hl">แล้วคุณล่ะ?</span>',
-    zh: '一句陳述句，後面加上「那你呢？」來反問對方。'
+    formula: '<span class="hl">ฬ</span> + <span class="hl2">短韻母</span>',
+    zh: '下降調短促'
   },
   cards: [
-    {icon:'🗣️',th:'เธอเอาชาเย็น แล้วคุณล่ะคะ',phonetic:'thoe ao chaa-yen, láew khun là khã?',zh:'她要冰泰式奶茶，那你呢？',bk:[{t:'เธอ',z:'她',c:'s'},{t:'เอา',z:'要',c:'v'},{t:'ชาเย็น',z:'冰泰奶',c:'o'},{t:'แล้วคุณล่ะคะ',z:'那你呢',c:'k'}]},
-    {icon:'�',th:'ผมเอากาแฟเย็นครับ',phonetic:'phóm ao kaa-fae yen khrãp',zh:'我要冰咖啡。',bk:[{t:'ผม',z:'我(男)',c:'s'},{t:'เอา',z:'要',c:'v'},{t:'กาแฟเย็น',z:'冰咖啡',c:'o'}]},
-    {icon:'🗣️',th:'ผมสบายดี แล้วคุณล่ะครับ',phonetic:'phóm sǎ-baai-dii, láew khun là khrãp?',zh:'我很好，那你呢？',bk:[{t:'ผม',z:'我(男)',c:'s'},{t:'สบายดี',z:'很好',c:'v'},{t:'แล้วคุณล่ะครับ',z:'那你呢',c:'k'}]},
-    {icon:'💬',th:'ฉันไม่ค่อยสบายค่ะ',phonetic:'chán mài kòy sǎ-baai khǎ',zh:'我不太舒服。',bk:[{t:'ฉัน',z:'我(女)',c:'s'},{t:'不ค่อยสบาย',z:'不太舒服',c:'v'}]},
-    {icon:'🗣️',th:'เขาเป็นคนไทย แล้วคุณล่ะครับ',phonetic:'kháo bpen khon-thai, láew khun là khrãp?',zh:'他是泰國人，那你呢？',bk:[{t:'เขา',z:'他',c:'s'},{t:'เป็น',z:'是',c:'v'},{t:'คนไทย',z:'泰國人',c:'o'},{t:'แล้วคุณล่ะครับ',z:'那你呢',c:'k'}]},
-    {icon:'💬',th:'ฉันก็เป็นคนไทยเหมือนกันค่ะ',phonetic:'chán kàw bpen khon-thai múean-kan khǎ',zh:'我也是泰國人。',bk:[{t:'ฉัน',z:'我(女)',c:'s'},{t:'ก็',z:'也',c:'k'},{t:'เป็น',z:'是',c:'v'},{t:'คนไทย',z:'泰國人',c:'o'},{t:'เหมือนกัน',z:'一樣',c:'t'}]}
+    {th:'ฬะ',phonetic:'là',zh:'(下降調短促)',icon:'',bk:[{t:'ะ', z:'短韻母 [a]'}, {t:'❌ 純發音練習',z:'無日常常用單字'}]},
+    {th:'ฬิ',phonetic:'lì',zh:'(下降調短促)',icon:'',bk:[{t:'ิ', z:'短韻母 [i]'}, {t:'❌ 純發音練習',z:'無日常常用單字'}]},
+    {th:'ฬุ',phonetic:'lù',zh:'(下降調短促)',icon:'',bk:[{t:'ุ', z:'短韻母 [u]'}, {t:'❌ 純發音練習',z:'無日常常用單字'}]},
+    {th:'เฬะ',phonetic:'lè',zh:'(下降調短促)',icon:'',bk:[{t:'เ◌ะ', z:'短韻母 [e]'}, {t:'❌ 純發音練習',z:'無日常常用單字'}]},
+    {th:'แฬะ',phonetic:'làe',zh:'(下降調短促)',icon:'',bk:[{t:'แ◌ะ', z:'短韻母 [ae]'}, {t:'❌ 純發音練習',z:'無日常常用單字'}]},
+    {th:'เฬาะ',phonetic:'lào',zh:'(下降調短促)',icon:'',bk:[{t:'เ◌าะ', z:'短韻母 [o]'}, {t:'❌ 純發音練習',z:'無日常常用單字'}]}
   ]
 };
 
